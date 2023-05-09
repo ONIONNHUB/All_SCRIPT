@@ -1,5 +1,5 @@
 local gamelist = {
-
+    [2753915549]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-Kaitan"
 }
 local checkgame = gamelist[game.gameId]
 if gamelist[game.gameId] then 
