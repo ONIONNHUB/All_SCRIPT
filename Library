@@ -2654,7 +2654,7 @@ function Library.CreateWindow(info)
 				Parent = OutSubTabPage
 			})
 
-			Library:AddToRegistry(OutSubTabPage, {
+			Library:AddToRegistry(SubTabPage, {
 				BackgroundColor3 = 'BackgroundColor',
 				BorderColor3 = 'OutlineColor'
 			})
@@ -2695,7 +2695,7 @@ function Library.CreateWindow(info)
 				ZIndex = 1,
 				Parent = OutBack
 			})
-			Library:AddToRegistry(OutBack, {
+			Library:AddToRegistry(InBack, {
 				BackgroundColor3 = 'BackgroundColor',
 				BorderColor3 = 'OutlineColor'
 			})
@@ -2736,7 +2736,8 @@ function Library.CreateWindow(info)
 				ZIndex = 1,
 				Parent = OutNext
 			})
-			Library:AddToRegistry(OutNext, {
+			
+			Library:AddToRegistry(InNext, {
 				BackgroundColor3 = 'BackgroundColor',
 				BorderColor3 = 'OutlineColor'
 			})
@@ -3398,21 +3399,13 @@ function Library.CreateWindow(info)
 		return Tab
 	end
 
-	local opencd = false
 	InputService.InputBegan:Connect(function(Input, Processed)
-		if Input.KeyCode == Enum.KeyCode[Options and Options.MenuKeybind and Options.MenuKeybind.Value or "RightControl"] and not Processed and not opencd then
+		if Input.KeyCode == Enum.KeyCode[Options and Options.MenuKeybind and Options.MenuKeybind.Value or "RightControl"] and not Processed then
 			if Outer.Visible then
-				TweenService:Create(Outer,TweenInfo.new(.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Size = UDim2.fromOffset(0,0)}):Play()
-				delay(.25,function()
-					Outer.Visible = false
-				end)
+				Outer.Visible = false
 			else
 				Outer.Visible = true
-				TweenService:Create(Outer,TweenInfo.new(.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Size = UDim2.fromOffset(550,650)}):Play()
 			end
-			opencd = true
-			wait(.25)
-			opencd = false
 		end
 	end)
 
