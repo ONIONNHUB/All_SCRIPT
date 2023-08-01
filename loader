@@ -1,8 +1,10 @@
 local gamelist = {
-    [2753915549]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-v1.0"
+    [2753915549]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-v1.0",
+    [4442272183]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-v1.0",
+    [7449423635]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-v1.0"
 }
-local checkgame = gamelist[game.gameId]
-if gamelist[game.gameId] then 
+local checkgame = gamelist[game.PlaceId]
+if gamelist[game.PlaceId] then 
 print (checkgame)
     loadstring(game:HttpGet(checkgame))()
 else 
