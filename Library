@@ -5,256 +5,40 @@ local TweenService = game:GetService('TweenService')
 local RunService = game:GetService('RunService')
 local LocalPlayer = game:GetService('Players').LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
+
+local isstudio
 local CoreGui = game:GetService("CoreGui")
-gui_parent = (function()
-	local x, c = pcall(function()
-		return CoreGui
-	end)
-	if x and c then
-		return c
-	end
-	x, c = pcall(function()
-		return (game:IsLoaded() or (game.Loaded:Wait() or 1)) and game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-	end)
-	if x and c then
-		return c
-	end
-	x, c = pcall(function()
-		return game:GetService("StarterGui")
-	end)
-	if x and c then
-		return c
-	end
-	return error("Seriously bad exploit. Can't find a place to store the GUI. Robust code can't help here.")
-end)()
---[[if getgenv().AntihookFF1 == nil then
-    getgenv().AntihookFF1 = {
-        ["print"] = false,
-        ["hook"] = false
-    }
-end
-    
-local azx 
-azx = hookfunc(rconsoleprint, function (...)
-    if getgenv().AntihookFF1["print"] == true then
-        return azx(...)
-    else
-        return 
-    end
-end)
-local al 
-al = hookfunc(hookfunction, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return al(...)
-    else
-        return 
-    end
-end)
-local al 
-al = hookfunc(setclipboard, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return al(...)
-    else
-        return 
-    end
-end)
-local an 
-an = hookfunc(replaceclosure, function (...)
-    if getgenv().AntihookFF1["print"] == true then
-        return an(...)
-    else
-        return 
-    end
-    
-end)
-local ay 
-ay = hookfunc(setreadonly, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return ay(...)
-    else
-        return 
-    end
-    
-end)
-local ae 
-ae = hookfunc(make_writeable, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return ae(...)
-    else
-        return 
-    end
-end)
-local av 
-av = hookfunc(print, function (...)
-    if getgenv().AntihookFF1["print"] == true then
-        return av(...)
-    else
-        return 
-    end
-end)
-local at 
-at = hookfunc(warn, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return at(...)
-    else
-        return 
-    end
-end)
-local aw 
-aw = hookfunc(writefile, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return aw(...)
-    else
-        return 
-    end
-end)
-local aq
-aq = hookfunc(appendfile, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return aq(...)
-    else
-        return 
-    end
-end)
-local dsa
-dsa = hookfunc(clonefunction,function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return dsa(...)
-    else
-        return 
-    end
-end)
-local as 
-as = hookfunc(hookfunc, function (...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return as(...)
-    else
-        return 
-    end
-end)
 
-getgenv().rconsoleprint = function(...)
-    if getgenv().AntihookFF1["print"] == true then
-        return main["1"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().hookfunc = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["2"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().hookfunction = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["3"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().replaceclosure = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["4"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().setreadonly = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["5"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().make_writeable = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["6"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().print = function(...)
-    if getgenv().AntihookFF1["print"] == true then
-        return main["7"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().warn = function(...)
-    if getgenv().AntihookFF1["print"] == true then
-        return main["8"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().writefile = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["9"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().appendfile = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["10"](...)
-    else
-        return "Secret"
-    end
-end
-getgenv().setclipboard = function(...)
-    if getgenv().AntihookFF1["hook"] == true then
-        return main["11"](...)
-    else
-        return "Secret"
-    end
-end
-spawn(function()
-    CoreGui.ChildAdded:connect(function(p1)
-       if p1:FindFirstChild("PropertiesFrame") or p1:FindFirstChild("ExplorerPanel") or p1:FindFirstChild("SaveInstance") then -- Dark Dex frames/children
-       game.Players.LocalPlayer:Kick("\nXenia Hub\nAnti Dark Dex")
-       wait(.5)
-       while true do end
-    end
-end)
-
-function ntf(msg,Delay)
-    game.StarterGui:SetCore("SendNotification",{
-        Title = "Xenia Hub",
-        Icon = "http://www.roblox.com/asset/?id=",
-        Text = msg,
-        Duration = Delay
-    })
+if game:GetService("RunService"):IsStudio() then
+	isstudio = true
 end
 
--------------------------------------- Anti Dev Console and Console Syn x ------------------------------
-
-spawn(function()
-    game:GetService("RunService").RenderStepped:connect(function()
-        for i,v in pairs (CoreGui:GetChildren())do
-            if v.Name == "DevConsoleMaster" then
-                v.Enabled = false
-                v:Destroy()
-                game.Players.LocalPlayer:Kick("\nXenia Hub\nAnti Dev Console")
-                wait(.5)
-                while true do end
-            end
-        end
-    end)
-end)
-
-local UIS = game:GetService("UserInputService")
-local keydown = false
-UIS.InputBegan:Connect(function(Input)
-    if Input.KeyCode == Enum.KeyCode.Insert then
-        keydown = true
-        game.Players.localPlayer:Kick("\Xenia Hub\nAnti Console Synapse X")
-        while true do
-
-        end
-    end
-end)]]
+if isstudio then
+	gui_parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+else
+	gui_parent = (function()
+		local x, c = pcall(function()
+			return CoreGui
+		end)
+		if x and c then
+			return c
+		end
+		x, c = pcall(function()
+			return (game:IsLoaded() or (game.Loaded:Wait() or 1)) and game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+		end)
+		if x and c then
+			return c
+		end
+		x, c = pcall(function()
+			return game:GetService("StarterGui")
+		end)
+		if x and c then
+			return c
+		end
+		return error("Seriously bad exploit. Can't find a place to store the GUI. Robust code can't help here.")
+	end)()
+end
+--[[]]
 
 local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 local length = 20
@@ -301,23 +85,28 @@ local ScreenGui = Instance.new('ScreenGui')
 ScreenGui.Name = randomString
 ProtectGui(ScreenGui)
 
+ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 ScreenGui.Parent = gui_parent
 
+local Buttons = {}
 local Signals = {}
 local Toggles = {}
 local Options = {}
 
-getgenv().Signals = Signals
-getgenv().Toggles = Toggles
-getgenv().Options = Options
+if not isstudio then
+	getgenv().Buttons = Buttons
+	getgenv().Signals = Signals
+	getgenv().Toggles = Toggles
+	getgenv().Options = Options
+end
 
 local Library = {
+	ScreenGui = ScreenGui,
 	Registry = {},
 	RegistryMap = {},
 	OpenedFrames = {},
 	HudRegistry = {},
-	ScreenGui = ScreenGui,
 	FontColor = Color3.fromRGB(255, 255, 255),
 	MainColor = Color3.fromRGB(28, 28, 28),
 	BackgroundColor = Color3.fromRGB(20, 20, 20),
@@ -546,16 +335,6 @@ function Library:RemoveFromRegistry(Instance)
 end;
 
 function Library:UpdateColorsUsingRegistry()
-	-- TODO: Could have an 'active' list of objects
-	-- where the active list only contains Visible objects.
-
-	-- IMPL: Could setup .Changed events on the AddToRegistry function
-	-- that listens for the 'Visible' propert being changed.
-	-- Visible: true => Add to active list, and call UpdateColors function
-	-- Visible: false => Remove from active list.
-
-	-- The above would be especially efficient for a rainbow menu color or live color-changing.
-
 	for Idx, Object in next, Library.Registry do
 		for Property, ColorIdx in next, Object.Properties do
 			if type(ColorIdx) == 'string' then
@@ -568,18 +347,18 @@ function Library:UpdateColorsUsingRegistry()
 end;
 
 function Library:GiveSignal(Signal)
-	-- Only used for signals not attached to library instances, as those should be cleaned up on object destruction by Roblox
 	table.insert(Library.Signals, Signal)
 end
 
 function Library:Unload()
-	-- Unload all of the signals
-	for Idx = #Library.Signals, 1, -1 do
-		local Connection = table.remove(Library.Signals, Idx)
-		Connection:Disconnect()
+	for i,v in pairs(Library.Signals) do
+		if typeof(v) == "RBXScriptConnection" then
+			v:Disconnect()
+		elseif typeof(v) == "boolean" then
+			v = nil
+		end
 	end
-
-	-- Call our unload callback, maybe to undo some hooks etc
+	
 	if Library.OnUnload then
 		Library.OnUnload()
 	end
@@ -770,7 +549,7 @@ do
 			Position = UDim2.fromOffset(5, 5);
 			TextXAlignment = Enum.TextXAlignment.Left;
 			TextSize = 14;
-			Text = ColorPicker.Title,--Info.Default;
+			Text = ColorPicker.Title,
 			TextWrapped = false;
 			ZIndex = 16;
 			Parent = PickerFrameInner;
@@ -948,7 +727,7 @@ do
 		local KeyPicker = {
 			Value = Info.Default;
 			Toggled = false;
-			Mode = Info.Mode or 'Toggle'; -- Always, Toggle, Hold
+			Mode = Info.Mode or 'Toggle';
 			Type = 'KeyPicker';
 
 			SyncToggleState = Info.SyncToggleState or false;
@@ -999,7 +778,7 @@ do
 
 		local ModeSelectOuter = Library:Create('Frame', {
 			BorderColor3 = Color3.new(0, 0, 0);
-			Position = UDim2.new(1, 0, 0, RelativeOffset + 1);
+			Position = UDim2.new(.6, 0, 0, RelativeOffset);
 			Size = UDim2.new(0, 60, 0, 45 + 2);
 			Visible = false;
 			ZIndex = 14;
@@ -1377,12 +1156,21 @@ do
 			{ BorderColor3 = 'AccentColor' },
 			{ BorderColor3 = 'Black' }
 		)
+		if Func then
+			ButtonOuter.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+					Func()
+				end
+			end)
+		end
 
-		ButtonOuter.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
-				Func()
-			end
-		end)
+		function Button:Connect(Func)
+			ButtonOuter.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+					Func()
+				end
+			end)
+		end
 
 		function Button:AddButton(Text, Func)
 			local SubButton = {}
@@ -1417,18 +1205,31 @@ do
 				Rotation = 90,
 				Parent = Inner
 			})
+			if Func then
+				ButtonOuter.InputBegan:Connect(function(Input)
+					if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+						Func()
+					end
+				end)
+			end
 
-			Outer.InputBegan:Connect(function(Input)
-				if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
-					Func()
-				end
-			end)
+			function Button:Connect(Func)
+				ButtonOuter.InputBegan:Connect(function(Input)
+					if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+						Func()
+					end
+				end)
+			end
+
+			Buttons[Text] = SubButton
 
 			return SubButton
 		end 
 
 		Groupbox:AddBlank(5)
 		Groupbox:Resize()
+
+		Buttons[Text] = Button
 
 		return Button
 	end
@@ -1483,7 +1284,7 @@ do
 		local InputLabel = Library:CreateLabel({
 			Size = UDim2.new(1, 0, 0, 15),
 			TextSize = 14,
-			Text = Info.Text,
+			Text = Info.Text or Idx,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			ZIndex = 5,
 			Parent = Container
@@ -1566,7 +1367,6 @@ do
 
 		Groupbox:AddBlank(5)
 		Groupbox:Resize()
-
 		Options[Idx] = Textbox
 
 		return Textbox
@@ -1574,7 +1374,7 @@ do
 
 	function Funcs:AddToggle(Idx, Info)
 		local Toggle = {
-			Value = Info.Default or false,
+			Value = Info and Info.Default or false,
 			Type = 'Toggle'
 		}
 
@@ -1609,8 +1409,8 @@ do
 		local ToggleLabel = Library:CreateLabel({
 			Size = UDim2.new(0, 216, 1, 0),
 			Position = UDim2.new(1, 6, 0, 0),
-			TextSize = 14,
-			Text = Info.Text,
+			TextSize = Info and Info.TextSize or 14,
+			Text = Info and Info.Text or Idx,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			ZIndex = 6,
 			Parent = ToggleInner
@@ -1636,6 +1436,11 @@ do
 			{ BorderColor3 = 'Black' }
 		)
 
+		function Toggle:Text(text,size)
+			ToggleLabel.Text = text or ToggleLabel.Text
+			ToggleLabel.TextSize = size or ToggleLabel.TextSize
+		end
+
 		function Toggle:UpdateColors()
 			Toggle:Display()
 		end
@@ -1650,13 +1455,15 @@ do
 
 		function Toggle:OnChanged(Func)
 			Toggle.Changed = Func
-			Func()
+			Func(Toggle.Value)
 		end
 
 		function Toggle:SetValue(Bool)
 			Toggle.Value = Bool
 			Toggle:Display()
-
+			if Info and Info.Callback then
+				Info.Callback(Toggle.Value)
+			end
 			if Toggle.Changed then
 				Toggle.Changed()
 			end
@@ -1665,9 +1472,10 @@ do
 		ToggleRegion.InputBegan:Connect(function(Input)
 			if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
 				Toggle.Value = not Toggle.Value
-				getgenv()[Idx] = Toggle.Value
 				Toggle:Display()
-
+				if Info and Info.Callback then
+					Info.Callback(Toggle.Value)
+				end
 				if Toggle.Changed then
 					Toggle.Changed()
 				end
@@ -1677,7 +1485,7 @@ do
 		end)
 
 		Toggle:Display()
-		Groupbox:AddBlank(Info.BlankSize or 5 + 2)
+		Groupbox:AddBlank(Info and Info.BlankSize or 5 + 2)
 		Groupbox:Resize()
 
 		Toggle.TextLabel = ToggleLabel
@@ -1689,8 +1497,9 @@ do
 		return Toggle
 	end
 
+
 	function Funcs:AddSlider(Idx, Info)
-		assert(Info.Default and Info.Text and Info.Min and Info.Max and Info.Rounding, 'Bad Slider Data')
+		assert(Info.Default and Info.Min and Info.Max and Info.Rounding, 'Bad Slider Data')
 
 		local Slider = {
 			Value = Info.Default,
@@ -1704,28 +1513,67 @@ do
 		local Groupbox = self
 		local Container = Groupbox.Container
 
-		local SlidersetMain = Library:Create('Frame', {
-			BackgroundTransparency = 1,
-			Size = UDim2.new(1, 0, 0, 14),
-			Visible = Info and not Info.Compact or Info.SetSlider or false,
-			ZIndex = 1,
-			Parent = Container
-		})
-
-		if not Info.Compact then
-			Library:CreateLabel({
-				AnchorPoint = Vector2.new(0,.5),
-				Position = UDim2.fromScale(0,.5),
-				Size = UDim2.new(1, 0, 1, 0),
-				TextSize = 14,
-				Text = Info.Text,
-				TextXAlignment = Enum.TextXAlignment.Left,
-				TextYAlignment = Enum.TextYAlignment.Bottom,
-				ZIndex = 5,
-				Parent = SlidersetMain
+		if not Info.Compact or Info.SetSlider then
+			local SlidersetMain = Library:Create('Frame', {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, 0, 0, 14),
+				Visible = Info and not Info.Compact or Info.SetSlider or false,
+				ZIndex = 1,
+				Parent = Container
 			})
 
-			Groupbox:AddBlank(3)
+			if not Info.Compact then
+				Library:CreateLabel({
+					AnchorPoint = Vector2.new(0,.5),
+					Position = UDim2.fromScale(0,.5),
+					Size = UDim2.new(1, 0, 1, 0),
+					TextSize = 14,
+					Text = Info.Text or Idx,
+					TextXAlignment = Enum.TextXAlignment.Left,
+					TextYAlignment = Enum.TextYAlignment.Bottom,
+					ZIndex = 5,
+					Parent = SlidersetMain
+				})
+
+				Groupbox:AddBlank(3)
+			end
+
+			if Info.SetSlider then
+				local SetSliderFrame = Library:Create('Frame', {
+					AnchorPoint = Vector2.new(0,.5),
+					Position = UDim2.fromScale(.7,.45),
+					BackgroundColor3 = Library.MainColor,
+					BorderColor3 = Color3.new(0,0,0),
+					Size = UDim2.new(.3, -4, 1, -1),
+					ZIndex = 5,
+					Parent = SlidersetMain
+				})
+				local Sliderset = Library:Create('TextBox', {
+					BackgroundColor3 = Library.MainColor,
+					BorderColor3 = Library.OutlineColor,
+					BorderMode = Enum.BorderMode.Inset,
+					Text = "--",
+					TextColor3 = Color3.new(1,1,1),
+					Size = UDim2.new(1, 0, 1, 0),
+					TextScaled = true,
+					ZIndex = 5,
+					Parent = SetSliderFrame
+				})
+				Sliderset.FocusLost:Connect(function(enter)
+					if enter and tonumber(Sliderset.Text) then
+						local nValue = math.clamp(tonumber(Sliderset.Text),Slider.Min,Slider.Max)
+						local OldValue = Slider.Value
+						Slider.Value = nValue
+
+						Sliderset.Text = (Info.Stext or "") or nValue
+						Slider:Display()
+
+						if nValue ~= OldValue and Slider.Changed then
+							Slider.Changed()
+						end
+					end
+				end)
+			end
 		end
 
 		local SliderOuter = Library:Create('Frame', {
@@ -1799,7 +1647,7 @@ do
 
 		function Slider:Display()
 			local Suffix = Info.Suffix or ''
-			DisplayLabel.Text = string.format('%s/%s', Slider.Value .. Suffix, Slider.Max .. Suffix)
+			DisplayLabel.Text = string.format((Info.Stext or "")..'%s/%s', Slider.Value .. Suffix, Slider.Max .. Suffix)
 
 			local X = math.ceil(Library:MapValue(Slider.Value, Slider.Min, Slider.Max, 0, Slider.MaxSize))
 			Fill.Size = UDim2.new(0, X, 1, 0)
@@ -1844,43 +1692,6 @@ do
 			end
 		end
 
-		if Info.SetSlider then
-			local SetSliderFrame = Library:Create('Frame', {
-				AnchorPoint = Vector2.new(0,.5),
-				Position = UDim2.fromScale(.7,.45),
-				BackgroundColor3 = Library.MainColor,
-				BorderColor3 = Color3.new(0,0,0),
-				Size = UDim2.new(.3, -4, 1, -1),
-				ZIndex = 5,
-				Parent = SlidersetMain
-			})
-			local Sliderset = Library:Create('TextBox', {
-				BackgroundColor3 = Library.MainColor,
-				BorderColor3 = Library.OutlineColor,
-				BorderMode = Enum.BorderMode.Inset,
-				Text = "--",
-				TextColor3 = Color3.new(1,1,1),
-				Size = UDim2.new(1, 0, 1, 0),
-				TextScaled = true,
-				ZIndex = 5,
-				Parent = SetSliderFrame
-			})
-			Sliderset.FocusLost:Connect(function(enter)
-				if enter and tonumber(Sliderset.Text) then
-					local nValue = math.clamp(tonumber(Sliderset.Text),Slider.Min,Slider.Max)
-					local OldValue = Slider.Value
-					Slider.Value = nValue
-
-					Sliderset.Text = nValue
-					Slider:Display()
-
-					if nValue ~= OldValue and Slider.Changed then
-						Slider.Changed()
-					end
-				end
-			end)
-		end
-
 		SliderInner.InputBegan:Connect(function(Input)
 			if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
 				local mPos = Mouse.X
@@ -1918,10 +1729,10 @@ do
 	end
 
 	function Funcs:AddDropdown(Idx, Info)
-		assert(Info.Text and Info.Values, 'Bad Dropdown Data')
+		if Info == nil then Info = {} end
 
 		local Dropdown = {
-			Values = Info.Values,
+			Values = Info.Values or {},
 			Value = Info.Multi and {},
 			Multi = Info.Multi,
 			Type = 'Dropdown'
@@ -1935,7 +1746,7 @@ do
 		local DropdownLabel = Library:CreateLabel({
 			Size = UDim2.new(1, 0, 0, 10),
 			TextSize = 14,
-			Text = Info.Text,
+			Text = Info.Text or Idx,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextYAlignment = Enum.TextYAlignment.Bottom,
 			ZIndex = 5,
@@ -2147,6 +1958,9 @@ do
 						Selected = Dropdown.Value[Value]
 					else
 						Selected = Dropdown.Value == Value
+						delay(.05,function()
+							Dropdown:CloseDropdown()
+						end)
 					end
 
 					ButtonLabel.TextColor3 = Selected and Library.AccentColor or Library.FontColor
@@ -2699,7 +2513,6 @@ function Library.CreateWindow(info)
 	end)
 
 	function Window:AddTab(Name,Info)
-		TabScrolling.AutomaticCanvasSize = Enum.AutomaticSize.Y
 		local Tab = {
 			Groupboxes = {},
 			Tabboxes = {}
@@ -2751,38 +2564,60 @@ function Library.CreateWindow(info)
 			Parent = TabContainer
 		})
 
+		local BaseScrollingLeftSide = Library:Create('Frame', {
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			AnchorPoint = Vector2.new(0, 1),
+			Position = UDim2.new(.025, 0, .975, 0),
+			Size = UDim2.new(0.475, 0, .95, 0),
+			ZIndex = 1,
+			Parent = TabFrame
+		})
+
 		local ScrollingLeftSide = Library:Create('ScrollingFrame', {
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Position = UDim2.new(0, 8, 0, 8),
-			Size = UDim2.new(0.5, -12, 0, 495),
+			AnchorPoint = Vector2.new(.5, 1),
+			Position = UDim2.new(.5, 0, 1, 0),
+			Size = UDim2.new(1, 0, 1, 0),
 			CanvasSize = UDim2.new(0,0,0,0),
 			AutomaticCanvasSize = Enum.AutomaticSize.Y,
 			VerticalScrollBarInset = Enum.ScrollBarInset.Always,
 			ScrollBarThickness = 5,
 			ClipsDescendants = true,
 			ZIndex = 2,
+			Parent = BaseScrollingLeftSide
+		})
+
+		local BaseScrollingRightSide = Library:Create('Frame', {
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			AnchorPoint = Vector2.new(1, 1),
+			Position = UDim2.new(.985, 0, .975, 0),
+			Size = UDim2.new(0.475, 0, .95, 0),
+			ZIndex = 1,
 			Parent = TabFrame
 		})
 
 		local ScrollingRightSide = Library:Create('ScrollingFrame', {
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Position = UDim2.new(0.5, 4, 0, 8),
-			Size = UDim2.new(0.5, -12, 0, 495),
+			AnchorPoint = Vector2.new(.5, 0.5),
+			Position = UDim2.new(.5, 0, .5, 0),
+			Size = UDim2.new(1, 0, 1, 0),
 			CanvasSize = UDim2.new(0,0,0,0),
 			AutomaticCanvasSize = Enum.AutomaticSize.Y,
 			VerticalScrollBarInset = Enum.ScrollBarInset.Always,
 			ScrollBarThickness = 5,
 			ClipsDescendants = true,
 			ZIndex = 2,
-			Parent = TabFrame
+			Parent = BaseScrollingRightSide
 		})
 
 		Library:Create('UIListLayout', {
 			Padding = UDim.new(0, 8),
 			FillDirection = Enum.FillDirection.Vertical,
-			HorizontalAlignment = Enum.HorizontalAlignment.Center,
+			HorizontalAlignment = Enum.HorizontalAlignment.Right,
 			SortOrder = Enum.SortOrder.LayoutOrder,
 			Parent = ScrollingLeftSide
 		})
@@ -2790,21 +2625,459 @@ function Library.CreateWindow(info)
 		Library:Create('UIListLayout', {
 			Padding = UDim.new(0, 8),
 			FillDirection = Enum.FillDirection.Vertical,
-			HorizontalAlignment = Enum.HorizontalAlignment.Center,
+			HorizontalAlignment = Enum.HorizontalAlignment.Right,
 			SortOrder = Enum.SortOrder.LayoutOrder,
 			Parent = ScrollingRightSide
 		})
 
-		local function chargesizescrolling(frame)
-			local nun = 0
-			local SizeY = 0
-			for i,v in pairs(frame:GetChildren()) do
-				if v:IsA("Frame") then
-					nun += 1
-					SizeY += v.Size.Y.Offset
+
+		function Tab:AddSubTab(info)
+			local SubTab = {
+				Groupboxes = {},
+				Tabboxes = {},
+				TabName = {}
+			}
+
+			local OutSubTabPage = Library:Create('Frame', {
+				BorderColor3 = Color3.new(0, 0, 0),
+				AnchorPoint = Vector2.new(.5, 0),
+				Position = UDim2.new(.49, 0, 0, 0),
+				Size = UDim2.new(.67, 0, .06, 0),
+				ZIndex = 1,
+			})
+			local SubTabPage = Library:Create('Frame', {
+				BackgroundColor3 = Library.BackgroundColor,
+				BorderColor3 = Library.OutlineColor,
+				Size = UDim2.new(1, 0, 1, 0),
+				BorderMode = Enum.BorderMode.Inset,
+				ZIndex = 1,
+				Parent = OutSubTabPage
+			})
+
+			Library:AddToRegistry(OutSubTabPage, {
+				BackgroundColor3 = 'BackgroundColor',
+				BorderColor3 = 'OutlineColor'
+			})
+
+			local Highlight = Library:Create('Frame', {
+				BackgroundColor3 = Library.AccentColor,
+				BorderSizePixel = 0,
+				Size = UDim2.new(1, 0, 0, 2),
+				ZIndex = 5,
+				Parent = SubTabPage
+			})
+
+			Library:AddToRegistry(Highlight, {
+				BackgroundColor3 = 'AccentColor'
+			})
+
+			local SubTabName = Library:CreateLabel({
+				Size = UDim2.new(1, 0, 1, 0),
+				TextColor3 = Color3.new(1,1,1),
+				TextSize = 18,
+				Text = info.Name or "None Text",
+				ZIndex = 2,
+				TextXAlignment = Enum.TextXAlignment.Center,
+				TextYAlignment = Enum.TextYAlignment.Center,
+				Parent = SubTabPage
+			})
+
+			local OutBack = Library:Create('Frame', {
+				BorderColor3 = Color3.new(0, 0, 0),
+				Size = UDim2.new(0, 29, .06, 0),
+				ZIndex = 1
+			})
+			local InBack = Library:Create('Frame', {
+				BackgroundColor3 = Library.BackgroundColor,
+				BorderColor3 = Library.OutlineColor,
+				Size = UDim2.new(1, 0, 1, 0),
+				BorderMode = Enum.BorderMode.Inset,
+				ZIndex = 1,
+				Parent = OutBack
+			})
+			Library:AddToRegistry(OutBack, {
+				BackgroundColor3 = 'BackgroundColor',
+				BorderColor3 = 'OutlineColor'
+			})
+
+			local Highlight = Library:Create('Frame', {
+				BackgroundColor3 = Library.AccentColor,
+				BorderSizePixel = 0,
+				Size = UDim2.new(1, 0, 0, 2),
+				ZIndex = 5,
+				Parent = InBack
+			})
+
+			Library:AddToRegistry(Highlight, {
+				BackgroundColor3 = 'AccentColor'
+			})
+
+			local Back = Library:CreateLabel({
+				Text = "<",
+				Size = UDim2.new(1, 0, 1, 0),
+				TextColor3 = Color3.new(1,1,1),
+				TextSize = 20,
+				ZIndex = 1,
+				Parent = InBack
+			})
+
+			local OutNext = Library:Create('Frame', {
+				BorderColor3 = Color3.new(0, 0, 0),
+				AnchorPoint = Vector2.new(1, 0),
+				Position = UDim2.new(.98, 0, 0, 0),
+				Size = UDim2.new(0, 29, .06, 0),
+				ZIndex = 1	
+			})
+			local InNext = Library:Create('Frame', {
+				BackgroundColor3 = Library.BackgroundColor,
+				BorderColor3 = Library.OutlineColor,
+				Size = UDim2.new(1, 0, 1, 0),
+				BorderMode = Enum.BorderMode.Inset,
+				ZIndex = 1,
+				Parent = OutNext
+			})
+			Library:AddToRegistry(OutNext, {
+				BackgroundColor3 = 'BackgroundColor',
+				BorderColor3 = 'OutlineColor'
+			})
+
+			local Highlight = Library:Create('Frame', {
+				BackgroundColor3 = Library.AccentColor,
+				BorderSizePixel = 0,
+				Size = UDim2.new(1, 0, 0, 2),
+				ZIndex = 5,
+				Parent = InNext
+			})
+
+			Library:AddToRegistry(Highlight, {
+				BackgroundColor3 = 'AccentColor'
+			})
+
+			local Next = Library:CreateLabel({
+				Text = ">",
+				Size = UDim2.new(1, 0, 1, 0),
+				TextColor3 = Color3.new(1,1,1),
+				TextSize = 20,
+				ZIndex = 1,
+				Parent = InNext
+			})
+			local cnom = 1
+
+			local function UpdateSubTab()
+				for _, Tab in next, SubTab.Tabboxes do
+					if Tab ~= SubTab.Tabboxes[cnom] then
+						Tab.Visible = false
+					end
 				end
+				SubTabName.Text = SubTab.TabName[SubTab.Tabboxes[cnom]]
+				SubTab.Tabboxes[cnom].Visible = true
 			end
-			return SizeY+(nun*8)
+
+			Back.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+					local num = cnom-1
+					if num < 1 then
+						num = #SubTab.Tabboxes
+					end
+					cnom = num
+					UpdateSubTab()
+				end
+			end)
+
+			Next.InputBegan:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
+					local num = cnom+1
+					if num > #SubTab.Tabboxes then
+						num = 1
+					end
+					cnom = num
+					UpdateSubTab()
+				end
+			end)
+
+			local Scrolling,BaseParent = nil,nil
+
+			if info.Side == 2 then
+				OutSubTabPage.Parent = BaseScrollingRightSide
+				BaseParent = BaseScrollingRightSide
+				ScrollingRightSide:Destroy()
+				Scrolling = Library:Create('ScrollingFrame', {
+					BackgroundTransparency = 1,
+					BorderSizePixel = 0,
+					AnchorPoint = Vector2.new(.5, 0.5),
+					Position = UDim2.new(.5, 0, .5, 0),
+					Size = UDim2.new(1, 0, .925, 0),
+					CanvasSize = UDim2.new(0,0,0,0),
+					AutomaticCanvasSize = Enum.AutomaticSize.Y,
+					VerticalScrollBarInset = Enum.ScrollBarInset.Always,
+					ScrollBarThickness = 5,
+					ClipsDescendants = true,
+					ZIndex = 2,
+					Parent = BaseScrollingRightSide
+				})
+			else
+				OutSubTabPage.Parent = BaseScrollingLeftSide
+				BaseParent = BaseScrollingLeftSide
+				ScrollingLeftSide:Destroy()
+				Scrolling = Library:Create('ScrollingFrame', {
+					BackgroundTransparency = 1,
+					BorderSizePixel = 0,
+					AnchorPoint = Vector2.new(.5, 1),
+					Position = UDim2.new(.5, 0, 1, 0),
+					Size = UDim2.new(1, 0, .925, 0),
+					CanvasSize = UDim2.new(0,0,0,0),
+					AutomaticCanvasSize = Enum.AutomaticSize.Y,
+					VerticalScrollBarInset = Enum.ScrollBarInset.Always,
+					ScrollBarThickness = 5,
+					ClipsDescendants = true,
+					ZIndex = 2,
+					Parent = BaseScrollingLeftSide
+				})
+			end
+			OutBack.Parent = OutSubTabPage.Parent
+			OutNext.Parent = OutSubTabPage.Parent
+			Library:Create('UIListLayout', {
+				Padding = UDim.new(0, 8),
+				FillDirection = Enum.FillDirection.Vertical,
+				HorizontalAlignment = Enum.HorizontalAlignment.Right,
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				Parent = Scrolling
+			})
+			SubTab.Container = Scrolling
+			SubTab.TabName[Scrolling] = SubTabName.Text
+			table.insert(SubTab.Tabboxes,Scrolling)
+
+			function SubTab:AddTab(Name)
+				local MoreTab = {
+					Groupboxes = {}
+				}
+				local NewTab = nil
+				if info.Side == 2 then
+					NewTab = Library:Create('ScrollingFrame', {
+						BackgroundTransparency = 1,
+						BorderSizePixel = 0,
+						AnchorPoint = Vector2.new(.5, 0.5),
+						Position = UDim2.new(.5, 0, .5, 0),
+						Size = UDim2.new(1, 0, .925, 0),
+						CanvasSize = UDim2.new(0,0,0,0),
+						AutomaticCanvasSize = Enum.AutomaticSize.Y,
+						VerticalScrollBarInset = Enum.ScrollBarInset.Always,
+						ScrollBarThickness = 5,
+						ClipsDescendants = true,
+						ZIndex = 2,
+						Parent = BaseScrollingRightSide
+					})
+				else
+					NewTab = Library:Create('ScrollingFrame', {
+						BackgroundTransparency = 1,
+						BorderSizePixel = 0,
+						AnchorPoint = Vector2.new(.5, 1),
+						Position = UDim2.new(.5, 0, 1, 0),
+						Size = UDim2.new(1, 0, .925, 0),
+						CanvasSize = UDim2.new(0,0,0,0),
+						AutomaticCanvasSize = Enum.AutomaticSize.Y,
+						VerticalScrollBarInset = Enum.ScrollBarInset.Always,
+						ScrollBarThickness = 5,
+						ClipsDescendants = true,
+						ZIndex = 2,
+						Parent = BaseScrollingLeftSide
+					})
+				end
+				Library:Create('UIListLayout', {
+					Padding = UDim.new(0, 8),
+					FillDirection = Enum.FillDirection.Vertical,
+					HorizontalAlignment = Enum.HorizontalAlignment.Right,
+					SortOrder = Enum.SortOrder.LayoutOrder,
+					Parent = NewTab
+				})
+				NewTab.Visible = false
+				SubTab.TabName[NewTab] = Name
+				table.insert(SubTab.Tabboxes,NewTab)
+
+				function MoreTab:AddGroupbox(Name)
+					local Groupbox = {}
+
+					local BoxOuter = Library:Create('Frame', {
+						AnchorPoint = Vector2.new(.5,.5),
+						Position = UDim2.new(.5, 0, .5, 0),
+						BackgroundColor3 = Library.BackgroundColor,
+						BorderColor3 = Library.OutlineColor,
+						Size = UDim2.new(.998, 0, 0, 507),
+						ZIndex = 2,
+						Parent = NewTab
+					})
+
+					Library:AddToRegistry(BoxOuter, {
+						BackgroundColor3 = 'BackgroundColor',
+						BorderColor3 = 'OutlineColor'
+					})
+
+					local BoxInner = Library:Create('Frame', {
+						BackgroundColor3 = Library.BackgroundColor,
+						BorderColor3 = Color3.new(0, 0, 0),
+						BorderMode = Enum.BorderMode.Inset,
+						Size = UDim2.new(1, 0, 1, 0),
+						ZIndex = 4,
+						Parent = BoxOuter
+					})
+
+					Library:AddToRegistry(BoxInner, {
+						BackgroundColor3 = 'BackgroundColor'
+					})
+
+					local Highlight = Library:Create('Frame', {
+						BackgroundColor3 = Library.AccentColor,
+						BorderSizePixel = 0,
+						Size = UDim2.new(1, 0, 0, 2),
+						ZIndex = 5,
+						Parent = BoxInner
+					})
+
+					Library:AddToRegistry(Highlight, {
+						BackgroundColor3 = 'AccentColor'
+					})
+
+					local GroupboxLabel = Library:CreateLabel({
+						Size = UDim2.new(1, 0, 0, 20),
+						Position = UDim2.new(0, 4, 0, 2),
+						TextSize = 15,
+						Text = Name,
+						TextXAlignment = Enum.TextXAlignment.Center,
+						ZIndex = 5,
+						Parent = BoxInner
+					})
+
+					local Container = Library:Create('Frame', {
+						BackgroundTransparency = 1,
+						Position = UDim2.new(0, 4, 0, 20),
+						Size = UDim2.new(1, -4, 1, -20),
+						ZIndex = 1,
+						Parent = BoxInner
+					})
+
+					Library:Create('UIListLayout', {
+						FillDirection = Enum.FillDirection.Vertical,
+						SortOrder = Enum.SortOrder.LayoutOrder,
+						Parent = Container
+					})
+
+					function Groupbox:Resize()
+						local Size = 0
+
+						for _, Element in next, Groupbox.Container:GetChildren() do
+							if not Element:IsA('UIListLayout') then
+								Size = Size + Element.Size.Y.Offset
+							end
+						end
+
+						BoxOuter.Size = UDim2.new(.998, 0, 0, 20 + Size + 2)
+					end
+
+					Groupbox.Container = Container
+					setmetatable(Groupbox, BaseGroupbox)
+
+					Groupbox:AddBlank(3)
+					Groupbox:Resize()
+
+					MoreTab.Groupboxes[Name] = Groupbox
+
+					return Groupbox
+				end
+
+				return MoreTab
+			end
+
+			function SubTab:AddGroupbox(Name)
+				local Groupbox = {}
+
+				local BoxOuter = Library:Create('Frame', {
+					AnchorPoint = Vector2.new(.5,.5),
+					Position = UDim2.new(.5, 0, .5, 0),
+					BackgroundColor3 = Library.BackgroundColor,
+					BorderColor3 = Library.OutlineColor,
+					Size = UDim2.new(1, 0, 0, 507),
+					ZIndex = 2,
+					Parent = self.Container
+				})
+
+				Library:AddToRegistry(BoxOuter, {
+					BackgroundColor3 = 'BackgroundColor',
+					BorderColor3 = 'OutlineColor'
+				})
+
+				local BoxInner = Library:Create('Frame', {
+					BackgroundColor3 = Library.BackgroundColor,
+					BorderColor3 = Color3.new(0, 0, 0),
+					BorderMode = Enum.BorderMode.Inset,
+					Size = UDim2.new(1, 0, 1, 0),
+					ZIndex = 4,
+					Parent = BoxOuter
+				})
+
+				Library:AddToRegistry(BoxInner, {
+					BackgroundColor3 = 'BackgroundColor'
+				})
+
+				local Highlight = Library:Create('Frame', {
+					BackgroundColor3 = Library.AccentColor,
+					BorderSizePixel = 0,
+					Size = UDim2.new(1, 0, 0, 2),
+					ZIndex = 5,
+					Parent = BoxInner
+				})
+
+				Library:AddToRegistry(Highlight, {
+					BackgroundColor3 = 'AccentColor'
+				})
+
+				local GroupboxLabel = Library:CreateLabel({
+					Size = UDim2.new(1, 0, 0, 20),
+					Position = UDim2.new(0, 4, 0, 2),
+					TextSize = 15,
+					Text = Name,
+					TextXAlignment = Enum.TextXAlignment.Center,
+					ZIndex = 5,
+					Parent = BoxInner
+				})
+
+				local Container = Library:Create('Frame', {
+					BackgroundTransparency = 1,
+					Position = UDim2.new(0, 4, 0, 20),
+					Size = UDim2.new(1, -4, 1, -20),
+					ZIndex = 1,
+					Parent = BoxInner
+				})
+
+				Library:Create('UIListLayout', {
+					FillDirection = Enum.FillDirection.Vertical,
+					SortOrder = Enum.SortOrder.LayoutOrder,
+					Parent = Container
+				})
+
+				function Groupbox:Resize()
+					local Size = 0
+
+					for _, Element in next, Groupbox.Container:GetChildren() do
+						if not Element:IsA('UIListLayout') then
+							Size = Size + Element.Size.Y.Offset
+						end
+					end
+
+					BoxOuter.Size = UDim2.new(.998, 0, 0, 20 + Size + 2)
+				end
+
+				Groupbox.Container = Container
+				setmetatable(Groupbox, BaseGroupbox)
+
+				Groupbox:AddBlank(3)
+				Groupbox:Resize()
+
+				SubTab.Groupboxes[Name] = Groupbox
+
+				return Groupbox
+			end
+
+			return SubTab
 		end
 
 		function Tab:ShowTab()
@@ -2829,7 +3102,7 @@ function Library.CreateWindow(info)
 				Position = UDim2.new(.5, 0, .5, 0),
 				BackgroundColor3 = Library.BackgroundColor,
 				BorderColor3 = Library.OutlineColor,
-				Size = UDim2.new(1, 0, 0, 507),
+				Size = UDim2.new(.998, 0, 0, 507),
 				ZIndex = 2,
 				Parent = Info.Side == 1 and ScrollingLeftSide or ScrollingRightSide
 			})
@@ -2865,11 +3138,11 @@ function Library.CreateWindow(info)
 			})
 
 			local GroupboxLabel = Library:CreateLabel({
-				Size = UDim2.new(1, 0, 0, 18),
+				Size = UDim2.new(1, 0, 0, 20),
 				Position = UDim2.new(0, 4, 0, 2),
-				TextSize = 14,
+				TextSize = 15,
 				Text = Info.Name,
-				TextXAlignment = Enum.TextXAlignment.Left,
+				TextXAlignment = Enum.TextXAlignment.Center,
 				ZIndex = 5,
 				Parent = BoxInner
 			})
@@ -2897,7 +3170,7 @@ function Library.CreateWindow(info)
 					end
 				end
 
-				BoxOuter.Size = UDim2.new(1, 0, 0, 20 + Size + 2)
+				BoxOuter.Size = UDim2.new(.998, 0, 0, 20 + Size + 2)
 			end
 
 			Groupbox.Container = Container
@@ -2929,7 +3202,7 @@ function Library.CreateWindow(info)
 				Position = UDim2.new(.5, 0, .5, 0),
 				BackgroundColor3 = Library.BackgroundColor,
 				BorderColor3 = Library.OutlineColor,
-				Size = UDim2.new(1, 0, 0, 0),
+				Size = UDim2.new(.998, 0, 0, 0),
 				ZIndex = 2,
 				Parent = Info.Side == 1 and ScrollingLeftSide or ScrollingRightSide
 			})
@@ -3073,7 +3346,7 @@ function Library.CreateWindow(info)
 					end
 
 					if BoxOuter.Size.Y.Offset < 20 + Size + 2 then
-						BoxOuter.Size = UDim2.new(1, 0, 0, 20 + Size + 2)
+						BoxOuter.Size = UDim2.new(.998, 0, 0, 20 + Size + 2)
 					end
 				end
 
@@ -3127,7 +3400,7 @@ function Library.CreateWindow(info)
 
 	local opencd = false
 	InputService.InputBegan:Connect(function(Input, Processed)
-		if Input.KeyCode == Enum.KeyCode[Options.MenuKeybind and Options.MenuKeybind.Value or "RightControl"] and not Processed and not opencd then
+		if Input.KeyCode == Enum.KeyCode[Options and Options.MenuKeybind and Options.MenuKeybind.Value or "RightControl"] and not Processed and not opencd then
 			if Outer.Visible then
 				TweenService:Create(Outer,TweenInfo.new(.25,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Size = UDim2.fromOffset(0,0)}):Play()
 				delay(.25,function()
@@ -3148,532 +3421,528 @@ function Library.CreateWindow(info)
 	return Window
 end
 
-local ThemeManager = {} do
-	ThemeManager.Folder = 'XeniaSettings'
+if not isstudio then
+	local ThemeManager = {} do
+		ThemeManager.Folder = 'XeniaSettings'
 
-	ThemeManager.Library = nil
-	ThemeManager.BuiltInThemes = {
-		['Default'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1c1c1c","AccentColor":"40bcf3","BackgroundColor":"141414","OutlineColor":"323232"}') },
-		['Jester'] 			= { 2, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"242424","AccentColor":"db4467","BackgroundColor":"1c1c1c","OutlineColor":"373737"}') },
-		['Mint'] 			= { 3, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"242424","AccentColor":"3db488","BackgroundColor":"1c1c1c","OutlineColor":"373737"}') },
-		['Tokyo Night'] 	= { 4, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"191925","AccentColor":"6759b3","BackgroundColor":"16161f","OutlineColor":"323232"}') },
-	}
+		ThemeManager.Library = nil
+		ThemeManager.BuiltInThemes = {
+			['Default'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1c1c1c","AccentColor":"40bcf3","BackgroundColor":"141414","OutlineColor":"323232"}') },
+			['Jester'] 			= { 2, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"242424","AccentColor":"db4467","BackgroundColor":"1c1c1c","OutlineColor":"373737"}') },
+			['Mint'] 			= { 3, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"242424","AccentColor":"3db488","BackgroundColor":"1c1c1c","OutlineColor":"373737"}') },
+			['Tokyo Night'] 	= { 4, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"191925","AccentColor":"6759b3","BackgroundColor":"16161f","OutlineColor":"323232"}') },
+		}
 
-	function ThemeManager:ApplyTheme(theme)
-		local customThemeData = self:GetCustomTheme(theme)
-		local data = customThemeData or self.BuiltInThemes[theme]
+		function ThemeManager:ApplyTheme(theme)
+			local customThemeData = self:GetCustomTheme(theme)
+			local data = customThemeData or self.BuiltInThemes[theme]
 
-		if not data then return end
+			if not data then return end
 
-		-- custom themes are just regular dictionaries instead of an array with { index, dictionary }
+			-- custom themes are just regular dictionaries instead of an array with { index, dictionary }
 
-		local scheme = data[2]
-		for idx, col in next, customThemeData or scheme do
-			self.Library[idx] = Color3.fromHex(col)
+			local scheme = data[2]
+			for idx, col in next, customThemeData or scheme do
+				self.Library[idx] = Color3.fromHex(col)
 
-			if Options[idx] then
-				Options[idx]:SetValueRGB(Color3.fromHex(col))
-				if idx == "AccentColor" then
-					if Library.Icon then
-						local ID = 11411584338
-						if col == "40bcf3" then
-						elseif col == "db4467" then
-							ID = 11465780134
-						elseif col == "3db488" then
-							ID = 11465860189
-						elseif col == "6759b3" then
-							ID = 11465872108
+				if Options[idx] then
+					Options[idx]:SetValueRGB(Color3.fromHex(col))
+					if idx == "AccentColor" then
+						if Library.Icon then
+							local ID = 11411584338
+							if col == "40bcf3" then
+							elseif col == "db4467" then
+								ID = 11465780134
+							elseif col == "3db488" then
+								ID = 11465860189
+							elseif col == "6759b3" then
+								ID = 11465872108
+							end
+							Library.Icon.Image = "rbxassetid://"..ID
 						end
-						Library.Icon.Image = "rbxassetid://"..ID
 					end
 				end
 			end
-		end
 
-		self:ThemeUpdate()
-	end
-
-	function ThemeManager:ThemeUpdate()
-		-- This allows us to force apply themes without loading the themes tab :)
-		local options = { "FontColor", "MainColor", "AccentColor", "BackgroundColor", "OutlineColor" }
-		for i, field in next, options do
-			if Options and Options[field] then
-				self.Library[field] = Options[field].Value
-			end
-		end
-
-		self.Library.AccentColorDark = self.Library:GetDarkerColor(self.Library.AccentColor);
-		self.Library:UpdateColorsUsingRegistry()
-	end
-
-	function ThemeManager:LoadDefault()		
-		local theme = 'Default'
-		local content = isfile(self.Folder .. '/themes/default.txt') and readfile(self.Folder .. '/themes/default.txt')
-
-		local isDefault = true
-		if content then
-			if self.BuiltInThemes[content] then
-				theme = content
-			elseif self:GetCustomTheme(content) then
-				theme = content
-			end
-			isDefault = false
-		elseif self.BuiltInThemes[self.DefaultTheme] then
-			theme = self.DefaultTheme
-		end
-
-		if isDefault then
-			Options.ThemeManager_ThemeList:SetValue(theme)
-		else
-			self:ApplyTheme(theme)
-		end
-	end
-
-	function ThemeManager:SaveDefault(theme)
-		writefile(self.Folder .. '/themes/default.txt', theme)
-	end
-
-	function ThemeManager:CreateThemeManager(groupbox)
-		groupbox:AddLabel('Background color'):AddColorPicker('BackgroundColor', { Default = self.Library.BackgroundColor });
-		groupbox:AddLabel('Main color')	:AddColorPicker('MainColor', { Default = self.Library.MainColor });
-		groupbox:AddLabel('Accent color'):AddColorPicker('AccentColor', { Default = self.Library.AccentColor });
-		groupbox:AddLabel('Outline color'):AddColorPicker('OutlineColor', { Default = self.Library.OutlineColor });
-		groupbox:AddLabel('Font color')	:AddColorPicker('FontColor', { Default = self.Library.FontColor });
-
-		local ThemesArray = {}
-		for Name, Theme in next, self.BuiltInThemes do
-			table.insert(ThemesArray, Name)
-		end
-
-		table.sort(ThemesArray, function(a, b) return self.BuiltInThemes[a][1] < self.BuiltInThemes[b][1] end)
-
-		groupbox:AddDivider()
-		groupbox:AddDropdown('ThemeManager_ThemeList', { Text = 'Theme list', Values = ThemesArray, Default = 1 })
-
-		groupbox:AddButton('Set as default', function()
-			self:SaveDefault(Options.ThemeManager_ThemeList.Value)
-			self.Library:Notify(string.format('Set default theme to %q', Options.ThemeManager_ThemeList.Value))
-		end)
-
-		Options.ThemeManager_ThemeList:OnChanged(function()
-			self:ApplyTheme(Options.ThemeManager_ThemeList.Value)
-		end)
-
-		groupbox:AddDivider()
-		groupbox:AddDropdown('ThemeManager_CustomThemeList', { Text = 'Custom themes', Values = self:ReloadCustomThemes(), AllowNull = true, Default = 1 })
-		groupbox:AddInput('ThemeManager_CustomThemeName', { Text = 'Custom theme name' })
-
-		groupbox:AddButton('Load custom theme', function() 
-			self:ApplyTheme(Options.ThemeManager_CustomThemeList.Value) 
-		end)
-
-		groupbox:AddButton('Save custom theme', function() 
-			self:SaveCustomTheme(Options.ThemeManager_CustomThemeName.Value)
-
-			Options.ThemeManager_CustomThemeList.Values = self:ReloadCustomThemes()
-			Options.ThemeManager_CustomThemeList:SetValues()
-			Options.ThemeManager_CustomThemeList:SetValue(nil)
-		end)
-
-		groupbox:AddButton('Refresh list', function()
-			Options.ThemeManager_CustomThemeList.Values = self:ReloadCustomThemes()
-			Options.ThemeManager_CustomThemeList:SetValues()
-			Options.ThemeManager_CustomThemeList:SetValue(nil)
-		end)
-
-		groupbox:AddButton('Set as default', function()
-			if Options.ThemeManager_CustomThemeList.Value ~= nil and Options.ThemeManager_CustomThemeList.Value ~= '' then
-				self:SaveDefault(Options.ThemeManager_CustomThemeList.Value)
-				self.Library:Notify(string.format('Set default theme to %q', Options.ThemeManager_CustomThemeList.Value))
-			end
-		end)
-
-		ThemeManager:LoadDefault()
-
-		local function UpdateTheme()
 			self:ThemeUpdate()
 		end
 
-		Options.BackgroundColor:OnChanged(UpdateTheme)
-		Options.MainColor:OnChanged(UpdateTheme)
-		Options.AccentColor:OnChanged(UpdateTheme)
-		Options.OutlineColor:OnChanged(UpdateTheme)
-		Options.FontColor:OnChanged(UpdateTheme)
-	end
-
-	function ThemeManager:GetCustomTheme(file)
-		local path = self.Folder .. '/themes/' .. file
-		if not isfile(path) then
-			return nil
-		end
-
-		local data = readfile(path)
-		local success, decoded = pcall(httpService.JSONDecode, httpService, data)
-
-		if not success then
-			return nil
-		end
-
-		return decoded
-	end
-
-	function ThemeManager:SaveCustomTheme(file)
-		if file:gsub(' ', '') == '' then
-			return self.Library:Notify('Invalid file name for theme (empty)', 3)
-		end
-
-		local theme = {}
-		local fields = { "FontColor", "MainColor", "AccentColor", "BackgroundColor", "OutlineColor" }
-
-		for _, field in next, fields do
-			theme[field] = Options[field].Value:ToHex()
-		end
-
-		writefile(self.Folder .. '/themes/' .. file .. '.json', httpService:JSONEncode(theme))
-	end
-
-	function ThemeManager:ReloadCustomThemes()
-		local list = listfiles(self.Folder .. '/themes')
-
-		local out = {}
-		for i = 1, #list do
-			local file = list[i]
-			if file:sub(-5) == '.json' then
-				-- i hate this but it has to be done ...
-
-				local pos = file:find('.json', 1, true)
-				local char = file:sub(pos, pos)
-
-				while char ~= '/' and char ~= '\\' and char ~= '' do
-					pos = pos - 1
-					char = file:sub(pos, pos)
+		function ThemeManager:ThemeUpdate()
+			-- This allows us to force apply themes without loading the themes tab :)
+			local options = { "FontColor", "MainColor", "AccentColor", "BackgroundColor", "OutlineColor" }
+			for i, field in next, options do
+				if Options and Options[field] then
+					self.Library[field] = Options[field].Value
 				end
+			end
 
-				if char == '/' or char == '\\' then
-					table.insert(out, file:sub(pos + 1))
+			self.Library.AccentColorDark = self.Library:GetDarkerColor(self.Library.AccentColor);
+			self.Library:UpdateColorsUsingRegistry()
+		end
+
+		function ThemeManager:LoadDefault()		
+			local theme = 'Default'
+			local content = isfile(self.Folder .. '/themes/default.txt') and readfile(self.Folder .. '/themes/default.txt')
+
+			local isDefault = true
+			if content then
+				if self.BuiltInThemes[content] then
+					theme = content
+				elseif self:GetCustomTheme(content) then
+					theme = content
+				end
+				isDefault = false
+			elseif self.BuiltInThemes[self.DefaultTheme] then
+				theme = self.DefaultTheme
+			end
+
+			if isDefault then
+				Options.ThemeManager_ThemeList:SetValue(theme)
+			else
+				self:ApplyTheme(theme)
+			end
+		end
+
+		function ThemeManager:SaveDefault(theme)
+			writefile(self.Folder .. '/themes/default.txt', theme)
+		end
+
+		function ThemeManager:CreateThemeManager(groupbox)
+			groupbox:AddLabel('Background color'):AddColorPicker('BackgroundColor', { Default = self.Library.BackgroundColor });
+			groupbox:AddLabel('Main color')	:AddColorPicker('MainColor', { Default = self.Library.MainColor });
+			groupbox:AddLabel('Accent color'):AddColorPicker('AccentColor', { Default = self.Library.AccentColor });
+			groupbox:AddLabel('Outline color'):AddColorPicker('OutlineColor', { Default = self.Library.OutlineColor });
+			groupbox:AddLabel('Font color')	:AddColorPicker('FontColor', { Default = self.Library.FontColor });
+
+			local ThemesArray = {}
+			for Name, Theme in next, self.BuiltInThemes do
+				table.insert(ThemesArray, Name)
+			end
+
+			table.sort(ThemesArray, function(a, b) return self.BuiltInThemes[a][1] < self.BuiltInThemes[b][1] end)
+
+			groupbox:AddDivider()
+			groupbox:AddDropdown('ThemeManager_ThemeList', { Text = 'Theme list', Values = ThemesArray, Default = 1 })
+
+			groupbox:AddButton('Set as default', function()
+				self:SaveDefault(Options.ThemeManager_ThemeList.Value)
+				self.Library:Notify(string.format('Set default theme to %q', Options.ThemeManager_ThemeList.Value))
+			end)
+
+			Options.ThemeManager_ThemeList:OnChanged(function()
+				self:ApplyTheme(Options.ThemeManager_ThemeList.Value)
+			end)
+
+			groupbox:AddDivider()
+			groupbox:AddDropdown('ThemeManager_CustomThemeList', { Text = 'Custom themes', Values = self:ReloadCustomThemes(), AllowNull = true, Default = 1 })
+			groupbox:AddInput('ThemeManager_CustomThemeName', { Text = 'Custom theme name' })
+
+			groupbox:AddButton('Load custom theme', function() 
+				self:ApplyTheme(Options.ThemeManager_CustomThemeList.Value) 
+			end)
+
+			groupbox:AddButton('Save custom theme', function() 
+				self:SaveCustomTheme(Options.ThemeManager_CustomThemeName.Value)
+
+				Options.ThemeManager_CustomThemeList.Values = self:ReloadCustomThemes()
+				Options.ThemeManager_CustomThemeList:SetValues()
+				Options.ThemeManager_CustomThemeList:SetValue(nil)
+			end)
+
+			groupbox:AddButton('Refresh list', function()
+				Options.ThemeManager_CustomThemeList.Values = self:ReloadCustomThemes()
+				Options.ThemeManager_CustomThemeList:SetValues()
+				Options.ThemeManager_CustomThemeList:SetValue(nil)
+			end)
+
+			groupbox:AddButton('Set as default', function()
+				if Options.ThemeManager_CustomThemeList.Value ~= nil and Options.ThemeManager_CustomThemeList.Value ~= '' then
+					self:SaveDefault(Options.ThemeManager_CustomThemeList.Value)
+					self.Library:Notify(string.format('Set default theme to %q', Options.ThemeManager_CustomThemeList.Value))
+				end
+			end)
+
+			ThemeManager:LoadDefault()
+
+			local function UpdateTheme()
+				self:ThemeUpdate()
+			end
+
+			Options.BackgroundColor:OnChanged(UpdateTheme)
+			Options.MainColor:OnChanged(UpdateTheme)
+			Options.AccentColor:OnChanged(UpdateTheme)
+			Options.OutlineColor:OnChanged(UpdateTheme)
+			Options.FontColor:OnChanged(UpdateTheme)
+		end
+
+		function ThemeManager:GetCustomTheme(file)
+			local path = self.Folder .. '/themes/' .. file
+			if not isfile(path) then
+				return nil
+			end
+
+			local data = readfile(path)
+			local success, decoded = pcall(httpService.JSONDecode, httpService, data)
+
+			if not success then
+				return nil
+			end
+
+			return decoded
+		end
+
+		function ThemeManager:SaveCustomTheme(file)
+			if file:gsub(' ', '') == '' then
+				return self.Library:Notify('Invalid file name for theme (empty)', 3)
+			end
+
+			local theme = {}
+			local fields = { "FontColor", "MainColor", "AccentColor", "BackgroundColor", "OutlineColor" }
+
+			for _, field in next, fields do
+				theme[field] = Options[field].Value:ToHex()
+			end
+
+			writefile(self.Folder .. '/themes/' .. file .. '.json', httpService:JSONEncode(theme))
+		end
+
+		function ThemeManager:ReloadCustomThemes()
+			local list = listfiles(self.Folder .. '/themes')
+
+			local out = {}
+			for i = 1, #list do
+				local file = list[i]
+				if file:sub(-5) == '.json' then
+
+					local pos = file:find('.json', 1, true)
+					local char = file:sub(pos, pos)
+
+					while char ~= '/' and char ~= '\\' and char ~= '' do
+						pos = pos - 1
+						char = file:sub(pos, pos)
+					end
+
+					if char == '/' or char == '\\' then
+						table.insert(out, file:sub(pos + 1))
+					end
+				end
+			end
+
+			return out
+		end
+
+		function ThemeManager:SetLibrary(lib)
+			self.Library = lib
+		end
+
+		function ThemeManager:BuildFolderTree()
+			local paths = {}
+
+			local parts = self.Folder:split('/')
+			for idx = 1, #parts do
+				paths[#paths + 1] = table.concat(parts, '/', 1, idx)
+			end
+
+			table.insert(paths, self.Folder .. '/themes')
+			table.insert(paths, self.Folder .. '/settings')
+
+			for i = 1, #paths do
+				local str = paths[i]
+				if not isfolder(str) then
+					makefolder(str)
 				end
 			end
 		end
 
-		return out
-	end
-
-	function ThemeManager:SetLibrary(lib)
-		self.Library = lib
-	end
-
-	function ThemeManager:BuildFolderTree()
-		local paths = {}
-
-		-- build the entire tree if a path is like some-hub/phantom-forces
-		-- makefolder builds the entire tree on Synapse X but not other exploits
-
-		local parts = self.Folder:split('/')
-		for idx = 1, #parts do
-			paths[#paths + 1] = table.concat(parts, '/', 1, idx)
+		function ThemeManager:SetFolder(folder)
+			self.Folder = folder
+			self:BuildFolderTree()
 		end
 
-		table.insert(paths, self.Folder .. '/themes')
-		table.insert(paths, self.Folder .. '/settings')
-
-		for i = 1, #paths do
-			local str = paths[i]
-			if not isfolder(str) then
-				makefolder(str)
-			end
+		function ThemeManager:CreateGroupBox(tab)
+			assert(self.Library, 'Must set ThemeManager.Library first!')
+			return tab:AddLeftGroupbox('Themes')
 		end
-	end
 
-	function ThemeManager:SetFolder(folder)
-		self.Folder = folder
-		self:BuildFolderTree()
-	end
-
-	function ThemeManager:CreateGroupBox(tab)
-		assert(self.Library, 'Must set ThemeManager.Library first!')
-		return tab:AddLeftGroupbox('Themes')
-	end
-
-	function ThemeManager:ApplyToTab(tab)
-		assert(self.Library, 'Must set ThemeManager.Library first!')
-		local groupbox = self:CreateGroupBox(tab)
-		self:CreateThemeManager(groupbox)
-	end
-
-	function ThemeManager:ApplyToGroupbox(groupbox)
-		assert(self.Library, 'Must set ThemeManager.Library first!')
-		self:CreateThemeManager(groupbox)
-	end
-
-	ThemeManager:BuildFolderTree()
-end
-
-local SaveManager = {} do
-	SaveManager.Folder = 'XeniaSettings'
-	SaveManager.Ignore = {}
-	SaveManager.Parser = {
-		Toggle = {
-			Save = function(idx, object) 
-				return { type = 'Toggle', idx = idx, value = object.Value } 
-			end,
-			Load = function(idx, data)
-				if Toggles[idx] then 
-					Toggles[idx]:SetValue(data.value)
-				end
-			end,
-		},
-		Slider = {
-			Save = function(idx, object)
-				return { type = 'Slider', idx = idx, value = tostring(object.Value) }
-			end,
-			Load = function(idx, data)
-				if Options[idx] then 
-					Options[idx]:SetValue(data.value)
-				end
-			end,
-		},
-		Dropdown = {
-			Save = function(idx, object)
-				return { type = 'Dropdown', idx = idx, value = object.Value, mutli = object.Multi }
-			end,
-			Load = function(idx, data)
-				if Options[idx] then 
-					Options[idx]:SetValue(data.value)
-				end
-			end,
-		},
-		ColorPicker = {
-			Save = function(idx, object)
-				return { type = 'ColorPicker', idx = idx, value = object.Value:ToHex() }
-			end,
-			Load = function(idx, data)
-				if Options[idx] then 
-					Options[idx]:SetValueRGB(Color3.fromHex(data.value))
-				end
-			end,
-		},
-		KeyPicker = {
-			Save = function(idx, object)
-				return { type = 'KeyPicker', idx = idx, mode = object.Mode, key = object.Value }
-			end,
-			Load = function(idx, data)
-				if Options[idx] then 
-					Options[idx]:SetValue({ data.key, data.mode })
-				end
-			end,
-		},
-
-		Input = {
-			Save = function(idx, object)
-				return { type = 'Input', idx = idx, text = object.Value }
-			end,
-			Load = function(idx, data)
-				if Options[idx] and type(data.text) == 'string' then
-					Options[idx]:SetValue(data.text)
-				end
-			end,
-		},
-	}
-
-	function SaveManager:SetIgnoreIndexes(list)
-		for _, key in next, list do
-			self.Ignore[key] = true
+		function ThemeManager:ApplyToTab(tab)
+			assert(self.Library, 'Must set ThemeManager.Library first!')
+			local groupbox = self:CreateGroupBox(tab)
+			self:CreateThemeManager(groupbox)
 		end
+
+		function ThemeManager:ApplyToGroupbox(groupbox)
+			assert(self.Library, 'Must set ThemeManager.Library first!')
+			self:CreateThemeManager(groupbox)
+		end
+
+		ThemeManager:BuildFolderTree()
 	end
 
-	function SaveManager:SetFolder(folder)
-		self.Folder = folder;
-		self:BuildFolderTree()
-	end
+	local SaveManager = {} do
+		SaveManager.Folder = 'XeniaSettings'
+		SaveManager.Ignore = {}
+		SaveManager.Parser = {
+			Toggle = {
+				Save = function(idx, object) 
+					return { type = 'Toggle', idx = idx, value = object.Value } 
+				end,
+				Load = function(idx, data)
+					if Toggles[idx] then 
+						Toggles[idx]:SetValue(data.value)
+					end
+				end,
+			},
+			Slider = {
+				Save = function(idx, object)
+					return { type = 'Slider', idx = idx, value = tostring(object.Value) }
+				end,
+				Load = function(idx, data)
+					if Options[idx] then 
+						Options[idx]:SetValue(data.value)
+					end
+				end,
+			},
+			Dropdown = {
+				Save = function(idx, object)
+					return { type = 'Dropdown', idx = idx, value = object.Value, mutli = object.Multi }
+				end,
+				Load = function(idx, data)
+					if Options[idx] then 
+						Options[idx]:SetValue(data.value)
+					end
+				end,
+			},
+			ColorPicker = {
+				Save = function(idx, object)
+					return { type = 'ColorPicker', idx = idx, value = object.Value:ToHex() }
+				end,
+				Load = function(idx, data)
+					if Options[idx] then 
+						Options[idx]:SetValueRGB(Color3.fromHex(data.value))
+					end
+				end,
+			},
+			KeyPicker = {
+				Save = function(idx, object)
+					return { type = 'KeyPicker', idx = idx, mode = object.Mode, key = object.Value }
+				end,
+				Load = function(idx, data)
+					if Options[idx] then 
+						Options[idx]:SetValue({ data.key, data.mode })
+					end
+				end,
+			},
 
-	function SaveManager:Save(name)
-		local fullPath = self.Folder .. '/settings/' .. name .. '.json'
-
-		local data = {
-			objects = {}
+			Input = {
+				Save = function(idx, object)
+					return { type = 'Input', idx = idx, text = object.Value }
+				end,
+				Load = function(idx, data)
+					if Options[idx] and type(data.text) == 'string' then
+						Options[idx]:SetValue(data.text)
+					end
+				end,
+			},
 		}
 
-		for idx, toggle in next, Toggles do
-			if self.Ignore[idx] then continue end
-
-			table.insert(data.objects, self.Parser[toggle.Type].Save(idx, toggle))
-		end
-
-		for idx, option in next, Options do
-			if not self.Parser[option.Type] then continue end
-			if self.Ignore[idx] then continue end
-
-			table.insert(data.objects, self.Parser[option.Type].Save(idx, option))
-		end	
-
-		local success, encoded = pcall(httpService.JSONEncode, httpService, data)
-		if not success then
-			return false, 'failed to encode data'
-		end
-
-		writefile(fullPath, encoded)
-		return true
-	end
-
-	function SaveManager:Load(name)
-		local file = self.Folder .. '/settings/' .. name .. '.json'
-		if not isfile(file) then return false, 'invalid file' end
-
-		local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
-		if not success then return false, 'decode error' end
-
-		for _, option in next, decoded.objects do
-			if self.Parser[option.type] then
-				self.Parser[option.type].Load(option.idx, option)
+		function SaveManager:SetIgnoreIndexes(list)
+			for _, key in next, list do
+				self.Ignore[key] = true
 			end
 		end
 
-		return true
-	end
-
-	function SaveManager:IgnoreThemeSettings()
-		self:SetIgnoreIndexes({ 
-			"BackgroundColor", "MainColor", "AccentColor", "OutlineColor", "FontColor", -- themes
-			"ThemeManager_ThemeList", 'ThemeManager_CustomThemeList', 'ThemeManager_CustomThemeName', -- themes
-		})
-	end
-
-	function SaveManager:BuildFolderTree()
-		local paths = {
-			self.Folder,
-			self.Folder .. '/themes',
-			self.Folder .. '/settings'
-		}
-
-		for i = 1, #paths do
-			local str = paths[i]
-			if not isfolder(str) then
-				makefolder(str)
-			end
+		function SaveManager:SetFolder(folder)
+			self.Folder = folder;
+			self:BuildFolderTree()
 		end
-	end
 
-	function SaveManager:RefreshConfigList()
-		local list = listfiles(self.Folder .. '/settings')
+		function SaveManager:Save(name)
+			local fullPath = self.Folder .. '/settings/' .. name .. '.json'
 
-		local out = {}
-		for i = 1, #list do
-			local file = list[i]
-			if file:sub(-5) == '.json' then
-				-- i hate this but it has to be done ...
+			local data = {
+				objects = {}
+			}
 
-				local pos = file:find('.json', 1, true)
-				local start = pos
+			for idx, toggle in next, Toggles do
+				if self.Ignore[idx] then continue end
 
-				local char = file:sub(pos, pos)
-				while char ~= '/' and char ~= '\\' and char ~= '' do
-					pos = pos - 1
-					char = file:sub(pos, pos)
+				table.insert(data.objects, self.Parser[toggle.Type].Save(idx, toggle))
+			end
+
+			for idx, option in next, Options do
+				if not self.Parser[option.Type] then continue end
+				if self.Ignore[idx] then continue end
+
+				table.insert(data.objects, self.Parser[option.Type].Save(idx, option))
+			end	
+
+			local success, encoded = pcall(httpService.JSONEncode, httpService, data)
+			if not success then
+				return false, 'failed to encode data'
+			end
+
+			writefile(fullPath, encoded)
+			return true
+		end
+
+		function SaveManager:Load(name)
+			local file = self.Folder .. '/settings/' .. name .. '.json'
+			if not isfile(file) then return false, 'invalid file' end
+
+			local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
+			if not success then return false, 'decode error' end
+
+			for _, option in next, decoded.objects do
+				if self.Parser[option.type] then
+					self.Parser[option.type].Load(option.idx, option)
 				end
+			end
 
-				if char == '/' or char == '\\' then
-					table.insert(out, file:sub(pos + 1, start - 1))
+			return true
+		end
+
+		function SaveManager:IgnoreThemeSettings()
+			self:SetIgnoreIndexes({ 
+				"BackgroundColor", "MainColor", "AccentColor", "OutlineColor", "FontColor",
+				"ThemeManager_ThemeList", 'ThemeManager_CustomThemeList', 'ThemeManager_CustomThemeName',
+			})
+		end
+
+		function SaveManager:BuildFolderTree()
+			local paths = {
+				self.Folder,
+				self.Folder .. '/themes',
+				self.Folder .. '/settings'
+			}
+
+			for i = 1, #paths do
+				local str = paths[i]
+				if not isfolder(str) then
+					makefolder(str)
 				end
 			end
 		end
 
-		return out
-	end
+		function SaveManager:RefreshConfigList()
+			local list = listfiles(self.Folder .. '/settings')
 
-	function SaveManager:SetLibrary(library)
-		self.Library = library
-	end
+			local out = {}
+			for i = 1, #list do
+				local file = list[i]
+				if file:sub(-5) == '.json' then
+					local pos = file:find('.json', 1, true)
+					local start = pos
 
-	function SaveManager:LoadAutoloadConfig()
-		if isfile(self.Folder .. '/settings/autoload.txt') then
-			local name = readfile(self.Folder .. '/settings/autoload.txt')
+					local char = file:sub(pos, pos)
+					while char ~= '/' and char ~= '\\' and char ~= '' do
+						pos = pos - 1
+						char = file:sub(pos, pos)
+					end
 
-			local success, err = self:Load(name)
-			if not success then
-				return self.Library:Notify('Failed to load autoload config: ' .. err)
+					if char == '/' or char == '\\' then
+						table.insert(out, file:sub(pos + 1, start - 1))
+					end
+				end
 			end
 
-			self.Library:Notify(string.format('Auto loaded config %q', name))
-		end
-	end
-
-
-	function SaveManager:BuildConfigSection(tab)
-		assert(self.Library, 'Must set SaveManager.Library')
-
-		local section = tab:AddRightGroupbox('Configuration')
-
-		section:AddDropdown('SaveManager_ConfigList', { Text = 'Config list', Values = self:RefreshConfigList(), AllowNull = true })
-		section:AddInput('SaveManager_ConfigName',    { Text = 'Config name' })
-
-		section:AddDivider()
-
-		section:AddButton('Create config', function()
-			local name = Options.SaveManager_ConfigName.Value
-
-			if name:gsub(' ', '') == '' then 
-				return self.Library:Notify('Invalid config name (empty)', 2)
-			end
-
-			local success, err = self:Save(name)
-			if not success then
-				return self.Library:Notify('Failed to save config: ' .. err)
-			end
-
-			self.Library:Notify(string.format('Created config %q', name))
-
-			Options.SaveManager_ConfigList.Values = self:RefreshConfigList()
-			Options.SaveManager_ConfigList:SetValues()
-			Options.SaveManager_ConfigList:SetValue(nil)
-		end):AddButton('Load config', function()
-			local name = Options.SaveManager_ConfigList.Value
-
-			local success, err = self:Load(name)
-			if not success then
-				return self.Library:Notify('Failed to load config: ' .. err)
-			end
-
-			self.Library:Notify(string.format('Loaded config %q', name))
-		end)
-
-		section:AddButton('Overwrite config', function()
-			local name = Options.SaveManager_ConfigList.Value
-
-			local success, err = self:Save(name)
-			if not success then
-				return self.Library:Notify('Failed to overwrite config: ' .. err)
-			end
-
-			self.Library:Notify(string.format('Overwrote config %q', name))
-		end)
-
-		section:AddButton('Autoload config', function()
-			local name = Options.SaveManager_ConfigList.Value
-			writefile(self.Folder .. '/settings/autoload.txt', name)
-			SaveManager.AutoloadLabel:SetText('Current autoload config: ' .. name)
-			self.Library:Notify(string.format('Set %q to auto load', name))
-		end)
-
-		section:AddButton('Refresh config list', function()
-			Options.SaveManager_ConfigList.Values = self:RefreshConfigList()
-			Options.SaveManager_ConfigList:SetValues()
-			Options.SaveManager_ConfigList:SetValue(nil)
-		end)
-
-		SaveManager.AutoloadLabel = section:AddLabel('Current autoload config: none', true)
-
-		if isfile(self.Folder .. '/settings/autoload.txt') then
-			local name = readfile(self.Folder .. '/settings/autoload.txt')
-			SaveManager.AutoloadLabel:SetText('Current autoload config: ' .. name)
+			return out
 		end
 
-		SaveManager:SetIgnoreIndexes({ 'SaveManager_ConfigList', 'SaveManager_ConfigName' })
+		function SaveManager:SetLibrary(library)
+			self.Library = library
+		end
+
+		function SaveManager:LoadAutoloadConfig()
+			if isfile(self.Folder .. '/settings/autoload.txt') then
+				local name = readfile(self.Folder .. '/settings/autoload.txt')
+
+				local success, err = self:Load(name)
+				if not success then
+					return self.Library:Notify('Failed to load autoload config: ' .. err)
+				end
+
+				self.Library:Notify(string.format('Auto loaded config %q', name))
+			end
+		end
+
+
+		function SaveManager:BuildConfigSection(tab)
+			assert(self.Library, 'Must set SaveManager.Library')
+
+			local section = tab:AddRightGroupbox('Configuration')
+
+			section:AddDropdown('SaveManager_ConfigList', { Text = 'Config list', Values = self:RefreshConfigList(), AllowNull = true })
+			section:AddInput('SaveManager_ConfigName',    { Text = 'Config name' })
+
+			section:AddDivider()
+
+			section:AddButton('Create config', function()
+				local name = Options.SaveManager_ConfigName.Value
+
+				if name:gsub(' ', '') == '' then 
+					return self.Library:Notify('Invalid config name (empty)', 2)
+				end
+
+				local success, err = self:Save(name)
+				if not success then
+					return self.Library:Notify('Failed to save config: ' .. err)
+				end
+
+				self.Library:Notify(string.format('Created config %q', name))
+
+				Options.SaveManager_ConfigList.Values = self:RefreshConfigList()
+				Options.SaveManager_ConfigList:SetValues()
+				Options.SaveManager_ConfigList:SetValue(nil)
+			end):AddButton('Load config', function()
+				local name = Options.SaveManager_ConfigList.Value
+
+				local success, err = self:Load(name)
+				if not success then
+					return self.Library:Notify('Failed to load config: ' .. err)
+				end
+
+				self.Library:Notify(string.format('Loaded config %q', name))
+			end)
+
+			section:AddButton('Overwrite config', function()
+				local name = Options.SaveManager_ConfigList.Value
+
+				local success, err = self:Save(name)
+				if not success then
+					return self.Library:Notify('Failed to overwrite config: ' .. err)
+				end
+
+				self.Library:Notify(string.format('Overwrote config %q', name))
+			end)
+
+			section:AddButton('Autoload config', function()
+				local name = Options.SaveManager_ConfigList.Value
+				writefile(self.Folder .. '/settings/autoload.txt', name)
+				SaveManager.AutoloadLabel:SetText('Current autoload config: ' .. name)
+				self.Library:Notify(string.format('Set %q to auto load', name))
+			end)
+
+			section:AddButton('Refresh config list', function()
+				Options.SaveManager_ConfigList.Values = self:RefreshConfigList()
+				Options.SaveManager_ConfigList:SetValues()
+				Options.SaveManager_ConfigList:SetValue(nil)
+			end)
+
+			SaveManager.AutoloadLabel = section:AddLabel('Current autoload config: none', true)
+
+			if isfile(self.Folder .. '/settings/autoload.txt') then
+				local name = readfile(self.Folder .. '/settings/autoload.txt')
+				SaveManager.AutoloadLabel:SetText('Current autoload config: ' .. name)
+			end
+
+			SaveManager:SetIgnoreIndexes({ 'SaveManager_ConfigList', 'SaveManager_ConfigName' })
+		end
+
+		SaveManager:BuildFolderTree()
 	end
 
-	SaveManager:BuildFolderTree()
+	getgenv().ThemeManager = ThemeManager
+	getgenv().SaveManager = SaveManager
 end
-
-getgenv().ThemeManager = ThemeManager
-getgenv().SaveManager = SaveManager
 
 return Library
