@@ -1,0 +1,10 @@
+local gamelist = {
+    [2753915549]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-v1.0"
+}
+local checkgame = gamelist[game.2753915549,4442272183,7449423635]
+if gamelist[game.gameId] then 
+print (checkgame)
+    loadstring(game:HttpGet(checkgame))()
+else 
+game.Players.LocalPlayer:Kick("Not Game Support")
+end
