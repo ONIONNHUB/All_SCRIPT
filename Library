@@ -1,3 +1,4 @@
+print("YO")
 local InputService = game:GetService('UserInputService')
 local httpService = game:GetService('HttpService')
 local TextService = game:GetService('TextService')
@@ -3442,14 +3443,14 @@ if not isstudio then
 					Options[idx]:SetValueRGB(Color3.fromHex(col))
 					if idx == "AccentColor" then
 						if Library.Icon then
-							local ID = 11411584338
+							local ID = 14273723787
 							if col == "40bcf3" then
 							elseif col == "db4467" then
-								ID = 11465780134
+								ID = 14273736600
 							elseif col == "3db488" then
-								ID = 11465860189
+								ID = 14273730187
 							elseif col == "6759b3" then
-								ID = 11465872108
+								ID = 14273734463
 							end
 							Library.Icon.Image = "rbxassetid://"..ID
 						end
