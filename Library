@@ -359,7 +359,7 @@ function Library:Unload()
 			v = nil
 		end
 	end
-	
+
 	if Library.OnUnload then
 		Library.OnUnload()
 	end
@@ -555,7 +555,6 @@ do
 			ZIndex = 16;
 			Parent = PickerFrameInner;
 		});
-
 
 		Library:AddToRegistry(PickerFrameInner, { BackgroundColor3 = 'BackgroundColor'; BorderColor3 = 'OutlineColor'; });
 		Library:AddToRegistry(Highlight, { BackgroundColor3 = 'AccentColor'; });
@@ -2272,13 +2271,30 @@ function Library.CreateWindow(info)
 			BackgroundColor3 = 'MainColor',
 			BorderColor3 = 'OutlineColor'
 		})
+		
 		local IconLabel = Library:Create('ImageLabel', {
 			BackgroundTransparency = 1,
 			Size = UDim2.new(1, 0, 1, 0),
 			ZIndex = 1,
-			Image = "rbxassetid://"..info.Title.Icon,
+			Image = "",
 			Parent = IconFrame
 		})
+		
+		if info.Title.Icon == true then
+			IconLabel.Image = "https://imgur.com/2FWwZlg"
+			IconLabel.ImageColor3 = Library.AccentColor
+			local IconLabelS = Library:Create('ImageLabel', {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, 0, 1, 0),
+				ZIndex = 1,
+				Image = "https://imgur.com/Lp1wOPQ",
+				Parent = IconFrame
+			})
+			Library:AddToRegistry(IconLabel, { ImageColor3 = 'AccentColor'; });
+		elseif typeof(info.Title.Icon) == "number" then
+			IconLabel.Image = "rbxassetid://"..info.Title.Icon
+		end
+		
 		Library:Create('UIGradient', {
 			Rotation = 90,
 			Color = ColorSequence.new{
@@ -2737,7 +2753,7 @@ function Library.CreateWindow(info)
 				ZIndex = 1,
 				Parent = OutNext
 			})
-			
+
 			Library:AddToRegistry(InNext, {
 				BackgroundColor3 = 'BackgroundColor',
 				BorderColor3 = 'OutlineColor'
@@ -3438,24 +3454,6 @@ if not isstudio then
 			local scheme = data[2]
 			for idx, col in next, customThemeData or scheme do
 				self.Library[idx] = Color3.fromHex(col)
-
-				if Options[idx] then
-					Options[idx]:SetValueRGB(Color3.fromHex(col))
-					if idx == "AccentColor" then
-						if Library.Icon then
-							local ID = 14273723787
-							if col == "40bcf3" then
-							elseif col == "db4467" then
-								ID = 14273736600
-							elseif col == "3db488" then
-								ID = 14273730187
-							elseif col == "6759b3" then
-								ID = 14273734463
-							end
-							Library.Icon.Image = "rbxassetid://"..ID
-						end
-					end
-				end
 			end
 
 			self:ThemeUpdate()
