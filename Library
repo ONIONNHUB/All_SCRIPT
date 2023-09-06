@@ -1,4 +1,5 @@
-print("YO")
+print("Library V1.0")
+
 local InputService = game:GetService('UserInputService')
 local httpService = game:GetService('HttpService')
 local TextService = game:GetService('TextService')
@@ -2219,14 +2220,9 @@ end;
 
 
 function Library.CreateWindow(info)
-	local window = Library.CreateWindow({
-	    Title = {
-	        Icon = true,
-	        Name = 'SiON HUB',
-	        Category = '| Blox Fruits [Version 1.0]'
-	    },
-	    Show = false,
-	})
+	local Window = {
+		Tabs = {}
+	}
 
 	local Outer = Library:Create('Frame', {
 		Name = "Window",
@@ -2276,39 +2272,88 @@ function Library.CreateWindow(info)
 			BackgroundColor3 = 'MainColor',
 			BorderColor3 = 'OutlineColor'
 		})
-		
-		local IconLabel = Library:Create('ImageLabel', {
-			BackgroundTransparency = 1,
-			Size = UDim2.new(1, 0, 1, 0),
-			ZIndex = 1,
-			Image = "",
-			Parent = IconFrame
-		})
-		
+
+		if getgenv().Icon1 then
+			getgenv().Icon1 = nil
+			getgenv().Icon1:Remove()
+		end
+		if getgenv().Icon2 then
+			getgenv().Icon2 = nil
+			getgenv().Icon2:Remove()
+		end
+
 		if info.Title.Icon == true then
-			IconLabel.Image = "https://imgur.com/2FWwZlg"
-			IconLabel.ImageColor3 = Library.AccentColor
-			local IconLabelS = Library:Create('ImageLabel', {
-				BackgroundTransparency = 1,
+			local imageUrl = "https://i.imgur.com/2FWwZlg.png"
+
+			local success, imageBytes = pcall(function()
+				return game:HttpGet(imageUrl)
+			end)
+
+			if success then
+
+				getgenv().Icon1 = Drawing.new("Image")
+				getgenv().Icon1.Data = game:HttpGet(imageUrl)
+				getgenv().Icon1.Size = Vector2.new(28, 28)
+				getgenv().Icon1.Visible = true
+				Library:AddToRegistry(getgenv().Icon1, { Color = 'AccentColor' })
+				getgenv().Icon1.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
+				IconOuter.Changed:Connect(function()
+					getgenv().Icon1.Visible = Outer.Visible
+					getgenv().Icon1.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
+				end)
+			else
+				warn("Failed to load image:", imageBytes)
+			end
+
+			local imageUrl = "https://i.imgur.com/Lp1wOPQ.png"
+
+			local success, imageBytes = pcall(function()
+				return game:HttpGet(imageUrl)
+			end)
+
+			if success then
+				getgenv().Icon2 = Drawing.new("Image")
+				getgenv().Icon2.Data = game:HttpGet(imageUrl)
+				getgenv().Icon2.Size = Vector2.new(28, 28)
+				getgenv().Icon2.Visible = true
+				getgenv().Icon2.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
+				IconOuter.Changed:Connect(function()
+					getgenv().Icon2.Visible = Outer.Visible
+					getgenv().Icon2.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
+				end)
+			else
+				warn("Failed to load image:", imageBytes)
+			end
+			Outer.AncestryChanged:Connect(function()
+				if getgenv().Icon1 then
+					getgenv().Icon1 = nil
+					getgenv().Icon1:Remove()
+				end
+				if getgenv().Icon2 then
+					getgenv().Icon2 = nil
+					getgenv().Icon2:Remove()
+				end
+			end)
+		elseif typeof(info.Title.Icon) == "number" then
+			local IconLabel = Library:Create('ImageLabel', {
+				BackgroundTransparency = 0,
 				Size = UDim2.new(1, 0, 1, 0),
 				ZIndex = 1,
-				Image = "https://imgur.com/Lp1wOPQ",
+				Image = "",
 				Parent = IconFrame
 			})
-			Library:AddToRegistry(IconLabel, { ImageColor3 = 'AccentColor'; });
-		elseif typeof(info.Title.Icon) == "number" then
+
 			IconLabel.Image = "rbxassetid://"..info.Title.Icon
+			Library:Create('UIGradient', {
+				Rotation = 90,
+				Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0,Color3.fromRGB(255,255,255)),
+					ColorSequenceKeypoint.new(1,Color3.fromRGB(212,212,212))
+				},
+				Parent = IconFrame
+			})
+			Library.Icon = IconLabel
 		end
-		
-		Library:Create('UIGradient', {
-			Rotation = 90,
-			Color = ColorSequence.new{
-				ColorSequenceKeypoint.new(0,Color3.fromRGB(255,255,255)),
-				ColorSequenceKeypoint.new(1,Color3.fromRGB(212,212,212))
-			},
-			Parent = IconFrame
-		})
-		Library.Icon = IconLabel
 	end
 	local titletext = info and info.Title and info.Title.Name or 'hub'
 	local sizetiX = Library:GetTextBounds(titletext, Enum.Font.Code, 16)
@@ -3451,14 +3496,18 @@ if not isstudio then
 		function ThemeManager:ApplyTheme(theme)
 			local customThemeData = self:GetCustomTheme(theme)
 			local data = customThemeData or self.BuiltInThemes[theme]
-
+			
 			if not data then return end
 
 			-- custom themes are just regular dictionaries instead of an array with { index, dictionary }
 
 			local scheme = data[2]
+			
 			for idx, col in next, customThemeData or scheme do
 				self.Library[idx] = Color3.fromHex(col)
+				if Options[idx] then
+					Options[idx]:SetValueRGB(Color3.fromHex(col))
+				end
 			end
 
 			self:ThemeUpdate()
