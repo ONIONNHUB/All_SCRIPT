@@ -1,4 +1,4 @@
-print("Library V1.0")
+print("Library V1.2")
 
 local InputService = game:GetService('UserInputService')
 local httpService = game:GetService('HttpService')
@@ -2220,22 +2220,102 @@ end;
 
 
 function Library.CreateWindow(info)
+	local success1, imageBytes1 = pcall(function()
+		return game:HttpGet("https://i.imgur.com/2FWwZlg.png")
+	end)
+	local success2, imageBytes2 = pcall(function()
+		return game:HttpGet("https://i.imgur.com/Lp1wOPQ.png")
+	end)
+
 	local Window = {
 		Tabs = {}
 	}
+
+	local startpos = Library:Create('Frame', {
+		BackgroundColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0,
+		AnchorPoint = Vector2.new(.5,.5),
+		Position = UDim2.new(.5, 0, .5, 0),
+		Size = UDim2.new(0, 0, 0, 0),
+		Visible = info and info.Show or false,
+		ZIndex = 1,
+		Parent = ScreenGui
+	})
 
 	local Outer = Library:Create('Frame', {
 		Name = "Window",
 		ClipsDescendants = true,
 		BackgroundColor3 = Color3.new(0, 0, 0),
 		BorderSizePixel = 0,
-		AnchorPoint = Vector2.new(.5,.5),
-		Position = UDim2.new(.5, 0, .5, 0),
-		Size = UDim2.new(0, 550, 0, 625),
+		Position = UDim2.new(0, startpos.AbsolutePosition.X-(550/2), 0, startpos.AbsolutePosition.Y-(625/2)),
+		Size = UDim2.new(0, 0, 0, 625),
 		Visible = info and info.Show or false,
 		ZIndex = 1,
 		Parent = ScreenGui
 	})
+	
+	startpos:Destroy()
+		
+	local function loading()
+		local Logo = Library:Create('Frame', {
+			Name = "Loading",
+			BackgroundColor3 = Color3.new(0, 0, 0),
+			BorderSizePixel = 0,
+			AnchorPoint = Vector2.new(1,.5),
+			Position = UDim2.new(.55, 0, .5, 0),
+			Size = UDim2.new(0, 150, 0, 150),
+			ZIndex = 1,
+			Parent = ScreenGui
+		})
+
+		local textLogo = Library:Create('Frame', {
+			Name = "Loading",
+			BackgroundColor3 = Color3.new(0, 0, 0),
+			BorderSizePixel = 0,
+			AnchorPoint = Vector2.new(1,.5),
+			Position = UDim2.new(.55, 0, .5, 0),
+			Size = UDim2.new(0, 300, 0, 100),
+			ZIndex = 1,
+			Parent = ScreenGui
+		})
+
+		local loading1 = Drawing.new("Image")
+		loading1.Data = imageBytes1
+		loading1.Size = Logo.AbsoluteSize
+		loading1.Visible = true
+		Library:AddToRegistry(loading1, { Color = 'AccentColor' })
+		loading1.Position = Vector2.new(Logo.AbsolutePosition.X+(Logo.AbsoluteSize.X/2), Logo.AbsolutePosition.Y+(Logo.AbsoluteSize.Y/2))
+		Logo.Changed:Connect(function()
+			loading1.Visible = Logo.Visible
+			loading1.Size = Logo.AbsoluteSize
+			loading1.Position = Vector2.new(Logo.AbsolutePosition.X+(Logo.AbsoluteSize.X/2), Logo.AbsolutePosition.Y+(Logo.AbsoluteSize.Y/2))
+		end)
+
+		local loading2 = Drawing.new("Image")
+		loading2.Data = imageBytes2
+		loading2.Size = Logo.AbsoluteSize
+		loading2.Visible = true
+		loading2.Position = Vector2.new(Logo.AbsolutePosition.X+(Logo.AbsoluteSize.X/2), Logo.AbsolutePosition.Y+(Logo.AbsoluteSize.Y/2))
+		Logo.Changed:Connect(function()
+			loading2.Visible = Logo.Visible
+			loading2.Size = Logo.AbsoluteSize
+			loading2.Position = Vector2.new(Logo.AbsolutePosition.X+(Logo.AbsoluteSize.X/2), Logo.AbsolutePosition.Y+(Logo.AbsoluteSize.Y/2))
+		end)
+		Outer.AncestryChanged:Connect(function()
+			if loading1 then
+				loading1 = nil
+				loading1:Remove()
+			end
+			if loading2 then
+				loading2 = nil
+				loading2:Remove()
+			end
+		end)
+	end
+
+	if info.Loading then
+		loading()
+	end
 
 	Library:MakeDraggable(Outer, 50)
 
@@ -2248,11 +2328,12 @@ function Library.CreateWindow(info)
 		ZIndex = 1,
 		Parent = Outer
 	})
+	
 	Library:AddToRegistry(Inner, {
 		BackgroundColor3 = 'MainColor',
 		BorderColor3 = 'AccentColor'
 	})
-	if info and info.Title and info.Title.Icon then
+	if info and info.Title and info.Title.Icon == true then
 		local IconOuter = Library:Create('Frame', {
 			BorderColor3 = Color3.new(0, 0, 0),
 			Position = UDim2.new(0, 10, 0, 10),
@@ -2283,47 +2364,26 @@ function Library.CreateWindow(info)
 		end
 
 		if info.Title.Icon == true then
-			local imageUrl = "https://i.imgur.com/2FWwZlg.png"
-
-			local success, imageBytes = pcall(function()
-				return game:HttpGet(imageUrl)
-			end)
-
-			if success then
-
-				getgenv().Icon1 = Drawing.new("Image")
-				getgenv().Icon1.Data = game:HttpGet(imageUrl)
-				getgenv().Icon1.Size = Vector2.new(28, 28)
-				getgenv().Icon1.Visible = true
-				Library:AddToRegistry(getgenv().Icon1, { Color = 'AccentColor' })
+			getgenv().Icon1 = Drawing.new("Image")
+			getgenv().Icon1.Data = imageBytes1
+			getgenv().Icon1.Size = Vector2.new(28, 28)
+			getgenv().Icon1.Visible = true
+			Library:AddToRegistry(getgenv().Icon1, { Color = 'AccentColor' })
+			getgenv().Icon1.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
+			IconOuter.Changed:Connect(function()
+				getgenv().Icon1.Visible = Outer.Visible
 				getgenv().Icon1.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
-				IconOuter.Changed:Connect(function()
-					getgenv().Icon1.Visible = Outer.Visible
-					getgenv().Icon1.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
-				end)
-			else
-				warn("Failed to load image:", imageBytes)
-			end
-
-			local imageUrl = "https://i.imgur.com/Lp1wOPQ.png"
-
-			local success, imageBytes = pcall(function()
-				return game:HttpGet(imageUrl)
 			end)
 
-			if success then
-				getgenv().Icon2 = Drawing.new("Image")
-				getgenv().Icon2.Data = game:HttpGet(imageUrl)
-				getgenv().Icon2.Size = Vector2.new(28, 28)
-				getgenv().Icon2.Visible = true
+			getgenv().Icon2 = Drawing.new("Image")
+			getgenv().Icon2.Data = imageBytes2
+			getgenv().Icon2.Size = Vector2.new(28, 28)
+			getgenv().Icon2.Visible = true
+			getgenv().Icon2.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
+			IconOuter.Changed:Connect(function()
+				getgenv().Icon2.Visible = Outer.Visible
 				getgenv().Icon2.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
-				IconOuter.Changed:Connect(function()
-					getgenv().Icon2.Visible = Outer.Visible
-					getgenv().Icon2.Position = Vector2.new(IconOuter.AbsolutePosition.X, IconOuter.AbsolutePosition.Y+(28+8))
-				end)
-			else
-				warn("Failed to load image:", imageBytes)
-			end
+			end)
 			Outer.AncestryChanged:Connect(function()
 				if getgenv().Icon1 then
 					getgenv().Icon1 = nil
@@ -3461,7 +3521,64 @@ function Library.CreateWindow(info)
 		if #TabContainer:GetChildren() == 1 then
 			Tab:ShowTab()
 		end
+		
+		function Window.setup()
+			Outer.Visible = false
+		end
+		
+		function Window.start()
+			Outer.Visible = true
+			Inner.Visible = false
+			TweenService:Create(Outer,TweenInfo.new(1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Size = UDim2.new(0, 550, 0, 625)}):Play()
+			local tsrcb,tsrct,tsrcts,tsrci = {},{},{},{}
+			for i,v in pairs(Inner:GetDescendants()) do
+				if v:IsA("Frame") or v:IsA("TextButton") or v:IsA("TextBox") or v:IsA("ImageLabel") or v:IsA("ImageButton") then
+					if tsrcb[v] == nil and v.BackgroundTransparency ~= 1 then
+						tsrcb[v] = v.BackgroundTransparency
+					end
+					v.BackgroundTransparency = 1
+					--TweenService:Create(v,TweenInfo.new(0.5),{BackgroundTransparency = tsrcb[v]}):Play()
+				end
+				if v:IsA("TextLabel") or v:IsA("TextButton") or v:IsA("TextBox") then
+					if tsrct[v] == nil and v.TextTransparency ~= 1 then
+						tsrct[v] = v.TextTransparency
+					end
+					v.TextTransparency = 1
+					--TweenService:Create(v,TweenInfo.new(0.5),{TextTransparency = tsrct[v]}):Play()
+					if tsrcts[v] == nil and v.TextStrokeTransparency ~= 1 then
+						tsrcts[v] = v.TextStrokeTransparency
+					end
+					v.TextStrokeTransparency = 1
+					--TweenService:Create(v,TweenInfo.new(0.5),{TextStrokeTransparency = tsrcts[v]}):Play()
+				end
+				if v:IsA("ImageLabel") or v:IsA("ImageButton") then
+					if tsrci[v] == nil and v.ImageTransparency ~= 1 then
+						tsrci[v] = v.ImageTransparency
+					end
+					v.ImageTransparency = 1
+					--TweenService:Create(v,TweenInfo.new(0.5),{ImageTransparency = tsrci[v]}):Play()
+				end
+			end
+			delay(4,function()
+				Inner.Visible = true
+				Inner.BackgroundTransparency = 1
+				TweenService:Create(Inner,TweenInfo.new(0.5),{BackgroundTransparency = 0}):Play()
 
+				for i,v in pairs(Inner:GetDescendants()) do
+					if v:IsA("Frame") or v:IsA("TextButton") or v:IsA("TextBox") or v:IsA("ImageLabel") or v:IsA("ImageButton") then
+						TweenService:Create(v,TweenInfo.new(0.5),{BackgroundTransparency = tsrcb[v]}):Play()
+					end
+					if v:IsA("TextLabel") or v:IsA("TextButton") or v:IsA("TextBox") then
+						TweenService:Create(v,TweenInfo.new(0.5),{TextTransparency = tsrct[v]}):Play()
+						TweenService:Create(v,TweenInfo.new(0.5),{TextStrokeTransparency = tsrcts[v]}):Play()
+					end
+					if v:IsA("ImageLabel") or v:IsA("ImageButton") then
+						TweenService:Create(v,TweenInfo.new(0.5),{ImageTransparency = tsrci[v]}):Play()
+					end
+				end
+			end)
+		end
+		
 		Window.Tabs[Name] = Tab
 		return Tab
 	end
@@ -3496,13 +3613,13 @@ if not isstudio then
 		function ThemeManager:ApplyTheme(theme)
 			local customThemeData = self:GetCustomTheme(theme)
 			local data = customThemeData or self.BuiltInThemes[theme]
-			
+
 			if not data then return end
 
 			-- custom themes are just regular dictionaries instead of an array with { index, dictionary }
 
 			local scheme = data[2]
-			
+
 			for idx, col in next, customThemeData or scheme do
 				self.Library[idx] = Color3.fromHex(col)
 				if Options[idx] then
