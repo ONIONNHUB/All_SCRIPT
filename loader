@@ -1,5 +1,6 @@
 local gamelist = {
     [994732206]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/BloxFruit-v1.0"
+    [1451439645]  = "https://raw.githubusercontent.com/ONIONNHUB/All_SCRIPT/main/KingLegacy-v1.0"
 }
 local checkgame = gamelist[game.gameId]
 if gamelist[game.gameId] then 
