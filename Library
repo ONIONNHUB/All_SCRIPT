@@ -1,4 +1,4 @@
-print("Library V1.2")
+print("Library v1.3")
 
 local InputService = game:GetService('UserInputService')
 local httpService = game:GetService('HttpService')
@@ -1344,15 +1344,15 @@ do
 				Text = Text:sub(1, Info.MaxLength)
 			end
 
+			Textbox.Value = Text
+			Box.Text = Text
+			
 			if Textbox.Changed then
 				Textbox.Changed()
 			end
-
-			Textbox.Value = Text
-			Box.Text = Text
 		end
 
-		Box:GetPropertyChangedSignal('Text'):Connect(function()
+		Box.FocusLost:Connect(function()
 			Textbox:SetValue(Box.Text)
 			Library:AttemptSave()
 		end)
@@ -2253,9 +2253,9 @@ function Library.CreateWindow(info)
 		ZIndex = 1,
 		Parent = ScreenGui
 	})
-	
+
 	startpos:Destroy()
-		
+
 	local function loading()
 		local Logo = Library:Create('Frame', {
 			Name = "Loading",
@@ -2328,7 +2328,7 @@ function Library.CreateWindow(info)
 		ZIndex = 1,
 		Parent = Outer
 	})
-	
+
 	Library:AddToRegistry(Inner, {
 		BackgroundColor3 = 'MainColor',
 		BorderColor3 = 'AccentColor'
@@ -3521,11 +3521,11 @@ function Library.CreateWindow(info)
 		if #TabContainer:GetChildren() == 1 then
 			Tab:ShowTab()
 		end
-		
+
 		function Window.setup()
 			Outer.Visible = false
 		end
-		
+
 		function Window.start()
 			Outer.Visible = true
 			Inner.Visible = false
@@ -3578,7 +3578,7 @@ function Library.CreateWindow(info)
 				end
 			end)
 		end
-		
+
 		Window.Tabs[Name] = Tab
 		return Tab
 	end
